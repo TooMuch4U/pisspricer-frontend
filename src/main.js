@@ -9,6 +9,8 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 
+export const eventBus = new Vue()
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
