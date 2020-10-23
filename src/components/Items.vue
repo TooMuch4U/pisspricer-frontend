@@ -1,21 +1,25 @@
 <template>
-    <div id="Items">
-      <table class="m-auto text-left" v-if="item_list != null">
-        <tr>
-          <th class="text-center">Image</th>
-          <th>Name</th>
-          <th>Store Count</th>
-          <th>Best Price</th>
-        </tr>
-        <tr v-for="item in item_list" v-bind:key="item.sku">
-          <td class="text-center">
-            <img class="item-image" :src="imageUrl(item.sku)">
-          </td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.storeCount }}</td>
-          <td>${{ item.bestPrice }}</td>
-        </tr>
-      </table>
+    <div id="Items" class="container-fluid pt-3">
+      <div class="row">
+        <div class="col-1"/>
+        <div class="col-2 bg-dark"></div>
+        <div class="col-8">
+          <p class="text-left">
+            Showing {{ this.actualCount }} of {{ this.totalCount }}
+          </p>
+          <table class="text-left table" v-if="item_list != null">
+            <tr v-for="item in item_list" v-bind:key="item.sku">
+              <td class="text-center">
+                <img class="item-image" :src="imageUrl(item.sku)">
+              </td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.storeCount }} stores</td>
+              <td>${{ item.bestPrice }}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-1"/>
+      </div>
     </div>
 </template>
 
@@ -26,7 +30,9 @@ export default {
     return {
       item_list: null,
       static_url: process.env.VUE_APP_STATIC_URL,
-      searchTerm: null
+      searchTerm: null,
+      actualCount: 0,
+      totalCount: 0
     }
   },
   mounted: function () {
@@ -49,6 +55,8 @@ export default {
       this.$http.get(process.env.API_URL + '/items', { params: { count: 24, search: this.searchTerm } })
         .then((res) => {
           this.item_list = res.data.items
+          this.totalCount = res.data.totalCount
+          this.actualCount = res.data.count
         })
         .catch((res) => {
           console.log('Error ' + res)
@@ -69,6 +77,7 @@ export default {
 
 <style scoped>
 .item-image {
-  max-width: 100px
+  max-width: 75px;
+  max-height: 75px;
 }
 </style>
