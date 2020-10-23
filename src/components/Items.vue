@@ -1,15 +1,16 @@
 <template>
     <div id="Items">
-      <p>Items</p>
-      <table v-if="item_list != null">
+      <table class="m-auto text-left" v-if="item_list != null">
         <tr>
-          <th>Image</th>
+          <th class="text-center">Image</th>
           <th>Name</th>
           <th>Store Count</th>
           <th>Best Price</th>
         </tr>
         <tr v-for="item in item_list" v-bind:key="item.sku">
-          <td><img :src="imageUrl(item.sku)"></td>
+          <td class="text-center">
+            <img class="item-image" :src="imageUrl(item.sku)">
+          </td>
           <td>{{ item.name }}</td>
           <td>{{ item.storeCount }}</td>
           <td>${{ item.bestPrice }}</td>
@@ -67,5 +68,7 @@ export default {
 </script>
 
 <style scoped>
-
+.item-image {
+  max-width: 100px
+}
 </style>
