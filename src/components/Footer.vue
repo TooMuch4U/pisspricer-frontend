@@ -1,5 +1,5 @@
 <template>
-  <div id="footer" class="container-fluid">
+  <div id="footer" class="container-fluid mt-3">
     <div class="row foot-div">
       <div class="col-12">
         <p class="text-center mx-auto mt-3">Tom Rizzi 2020</p>
