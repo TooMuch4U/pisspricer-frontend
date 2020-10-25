@@ -43,7 +43,7 @@
             </tr>
           </table>
 
-          <Pagination :pages="pages" :currentPage.sync="currentPage" />
+          <Pagination class="m-3" :pages="pages" :currentPage.sync="currentPage" />
 
         </div>
         <div class="col-1"/>

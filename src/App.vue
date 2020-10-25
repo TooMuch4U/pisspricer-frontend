@@ -2,14 +2,17 @@
   <div id="app">
     <HeaderNav></HeaderNav>
     <router-view/>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import HeaderNav from '@/components/HeaderNav'
+import Footer from '@/components/Footer'
 export default {
   components: {
-    HeaderNav
+    HeaderNav,
+    Footer
   },
   name: 'App'
 }
