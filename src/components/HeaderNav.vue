@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light rounded text-center">
+  <nav class="navbar navbar-expand-lg navbar-light border-bottom rounded text-center">
       <ul class="navbar-nav m-auto">
         <li class="nav-item">
           <router-link class="navbar-brand"
@@ -8,7 +8,7 @@
           </router-link>
         </li>
         <li class="nav-item">
-            <input class="form-control mt-2" type="text" v-model="searchTerm" placeholder="Search" @keyup.enter="searchItems" aria-label="Search">
+            <input class="form-control mt-2 input-outline shadow-none" type="text" v-model="searchTerm" placeholder="Search" @keyup.enter="searchItems" aria-label="Search">
         </li>
       </ul>
   </nav>
@@ -28,7 +28,7 @@ export default {
         .push({name: 'items', query: {s: this.searchTerm}}) // Change page to items page
         .catch(() => {}) // Catch error if already on items page
       if (this.$route.name === 'items') {
-        eventBus.$emit('remoteUpdateItems')
+        eventBus.$emit('remoteUpdateItems', 1)
       }
     }
   },
@@ -39,5 +39,17 @@ export default {
 <style>
 .navbar-brand {
   font-size: 2rem;
+}
+
+.form-control:focus {
+  border: 1px solid #ced4da;
+}
+
+.bg-custom {
+  background-color: #00c5ba;
+}
+
+.border-bottom {
+  border-bottom: black 1px;
 }
 </style>
