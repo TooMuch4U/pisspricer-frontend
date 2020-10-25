@@ -4,17 +4,7 @@
         <div class="col-1"/>
         <div class="col-3 text-left filter-div">
 
-          <div class="bottom-border pb-2 mb-3">
-            <h5 class="mb-1">Categories</h5>
-            <span class="mr-1 mb-1 px-2 d-inline-block cat"
-                  v-bind:class="{ active: filterCats.includes(cat.categoryId) }"
-                  v-for="cat in categories"
-                  v-bind:key="cat.categoryId"
-                  @click="filterCategory(cat.categoryId)"
-                  :id="'cat' + cat.categoryId">
-              {{ cat.category }}
-            </span>
-          </div>
+          <CategoryFilters @update="(catFilters) => {this.filterCats = catFilters}"/>
 
           <RegionFilters @update="(regId) => {this.filterRegion = regId}"/>
 
@@ -77,6 +67,7 @@
 import {eventBus} from '@/main.js'
 import Pagination from '@/components/Pagination'
 import RegionFilters from '@/components/RegionFilters'
+import CategoryFilters from '@/components/CategoryFilters'
 
 export default {
   data () {
@@ -90,18 +81,17 @@ export default {
       isLoading: 1,
       itemsPerPage: 24,
       order: 'best-match',
-      categories: null,
       filterCats: [],
       filterRegion: null
     }
   },
   components: {
     Pagination,
-    RegionFilters
+    RegionFilters,
+    CategoryFilters
   },
   mounted: function () {
     this.getItems()
-    this.getCategories()
   },
   created: function () {
     eventBus.$on('setCurrentPage', (page) => {
@@ -147,20 +137,6 @@ export default {
         })
         .catch((res) => {
           console.log('Error ' + res)
-        })
-    },
-    filterCategory: function (catId) {
-      if (this.filterCats.includes(catId)) {
-        this.filterCats.splice(this.filterCats.indexOf(catId), 1)
-      } else {
-        this.filterCats.push(catId)
-      }
-      this.getItems()
-    },
-    getCategories: function () {
-      this.$http.get(process.env.API_URL + '/categories')
-        .then((res) => {
-          this.categories = res.data
         })
     },
     imageUrl: function (sku) {
