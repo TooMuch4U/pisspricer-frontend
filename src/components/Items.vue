@@ -5,7 +5,6 @@
         <div class="col-3 text-left filter-div">
 
           <CategoryFilters @update="(catFilters) => {this.filterCats = catFilters}"/>
-
           <RegionFilters @update="(regId) => {this.filterRegion = regId}"/>
 
           <div>
