@@ -28,7 +28,8 @@ export default {
         .push({name: 'items', query: {s: this.searchTerm}}) // Change page to items page
         .catch(() => {}) // Catch error if already on items page
       if (this.$route.name === 'items') {
-        eventBus.$emit('remoteUpdateItems', 1)
+        eventBus.$emit('updateCurrentPage', 1)
+        eventBus.$emit('remoteUpdateItems')
       }
     }
   },
