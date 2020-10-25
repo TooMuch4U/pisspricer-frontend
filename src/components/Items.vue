@@ -6,7 +6,8 @@
 
           <div class="bottom-border pb-2 mb-3">
             <h5 class="mb-1">Categories</h5>
-            <span :class="catClass(cat.categoryId)"
+            <span class="mr-1 mb-1 px-2 d-inline-block cat"
+                  v-bind:class="{ active: filterCats.includes(cat.categoryId) }"
                   v-for="cat in categories"
                   v-bind:key="cat.categoryId"
                   @click="filterCategory(cat.categoryId)"
@@ -14,6 +15,8 @@
               {{ cat.category }}
             </span>
           </div>
+
+          <RegionFilters @update="(regId) => {this.filterRegion = regId}"/>
 
           <div>
             <h5 class="mb-1">Price</h5>
@@ -73,6 +76,7 @@
 <script>
 import {eventBus} from '@/main.js'
 import Pagination from '@/components/Pagination'
+import RegionFilters from '@/components/RegionFilters'
 
 export default {
   data () {
@@ -87,19 +91,23 @@ export default {
       itemsPerPage: 24,
       order: 'best-match',
       categories: null,
-      filterCats: []
+      filterCats: [],
+      filterRegion: null
     }
   },
   components: {
-    Pagination
+    Pagination,
+    RegionFilters
   },
   mounted: function () {
     this.getItems()
     this.getCategories()
   },
   created: function () {
-    eventBus.$on('remoteUpdateItems', (page) => {
+    eventBus.$on('setCurrentPage', (page) => {
       this.currentPage = page
+    })
+    eventBus.$on('remoteUpdateItems', () => {
       this.getItems()
     })
   },
@@ -125,6 +133,10 @@ export default {
         order: this.order,
         catId: this.filterCats}
 
+      if (this.regionFilter !== null) {
+        searchParams.regionId = this.filterRegion
+      }
+
       this.$http.get(process.env.API_URL + '/items',
         { params: searchParams })
         .then((res) => {
@@ -144,12 +156,6 @@ export default {
         this.filterCats.push(catId)
       }
       this.getItems()
-    },
-    catClass: function (catId) {
-      if (this.filterCats.includes(catId)) {
-        return 'mr-1 mb-1 px-2 d-inline-block cat active'
-      }
-      return 'mr-1 mb-1 px-2 d-inline-block cat'
     },
     getCategories: function () {
       this.$http.get(process.env.API_URL + '/categories')
@@ -178,26 +184,12 @@ export default {
   border: 0;
 }
 
-.cat {
-  display: inline-block;
-  white-space: nowrap;
-  background-color: #f8f9f8;
-  border: 1px solid #d7d7d7;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
 .bottom-border {
   border-bottom: 1px solid #dee2e6!important;
 }
 
 .pointer-cursor {
   cursor: pointer;
-}
-
-.cat.active {
-  background-color: #e1e2e1;
-  border: 1px solid #b7b7b7;
 }
 
 .filter-div {
