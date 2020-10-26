@@ -138,6 +138,8 @@ export default {
         searchParams.r = this.filterRadius
         searchParams.lng = this.lng
         searchParams.lat = this.lat
+      } else {
+        eventBus.$emit('searchRadiusUpdateMode', 'all')
       }
 
       this.$http.get(process.env.API_URL + '/items',

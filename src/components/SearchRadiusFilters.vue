@@ -38,6 +38,15 @@ export default {
       lng: null
     }
   },
+  created: function () {
+    eventBus.$on('searchRadiusUpdateMode', (mode) => {
+      if (mode === 'all') {
+        this.mode = 'all'
+        return
+      }
+      this.mode = 'near'
+    })
+  },
   methods: {
     allClicked () {
       this.mode = 'all'
