@@ -5,7 +5,9 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueGeolocation from 'vue-browser-geolocation'
 
+Vue.use(VueGeolocation)
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 

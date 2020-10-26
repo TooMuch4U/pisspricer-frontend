@@ -40,7 +40,7 @@ export default {
       }
       this.$emit('update', this.filterCats)
       eventBus.$emit('remoteUpdateItems')
-    },
+    }
   }
 }
 </script>

@@ -32,7 +32,8 @@ export default {
   methods: {
     changePage (goToPage) {
       if (goToPage === this.currentPage) return
-      eventBus.$emit('remoteUpdateItems', goToPage)
+      eventBus.$emit('setCurrentPage', goToPage)
+      eventBus.$emit('remoteUpdateItems')
     },
     paginationClass (page) {
       return {

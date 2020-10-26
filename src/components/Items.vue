@@ -5,6 +5,8 @@
         <div class="col-3 text-left filter-div">
 
           <CategoryFilters @update="(catFilters) => {this.filterCats = catFilters}"/>
+          <SearchRadiusFilters @updateMode="(newMode) => {this.radiusMode = newMode}"
+                               @updateRadius="(rad, lati, long) => {this.filterRadius = rad; this.lat = lati; this.lng = long}"/>
           <RegionFilters @update="(regId) => {this.filterRegion = regId}"/>
 
           <div>
@@ -67,6 +69,7 @@ import {eventBus} from '@/main.js'
 import Pagination from '@/components/Pagination'
 import RegionFilters from '@/components/RegionFilters'
 import CategoryFilters from '@/components/CategoryFilters'
+import SearchRadiusFilters from '@/components/SearchRadiusFilters'
 
 export default {
   data () {
@@ -81,13 +84,18 @@ export default {
       itemsPerPage: 24,
       order: 'best-match',
       filterCats: [],
-      filterRegion: null
+      filterRegion: null,
+      radiusMode: 'all',
+      filterRadius: 50,
+      lat: null,
+      lng: null
     }
   },
   components: {
     Pagination,
     RegionFilters,
-    CategoryFilters
+    CategoryFilters,
+    SearchRadiusFilters
   },
   mounted: function () {
     this.getItems()
@@ -124,6 +132,12 @@ export default {
 
       if (this.regionFilter !== null) {
         searchParams.regionId = this.filterRegion
+      }
+
+      if (this.filterRadius !== null && this.lng !== null && this.lat !== null && this.radiusMode === 'near') {
+        searchParams.r = this.filterRadius
+        searchParams.lng = this.lng
+        searchParams.lat = this.lat
       }
 
       this.$http.get(process.env.API_URL + '/items',
