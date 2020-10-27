@@ -49,9 +49,12 @@
                 <img v-else class="item-image" src="@/assets/logo.png">
               </td>
               <td>
-                <p class="mb-0">{{ item.name }}</p>
+                <p class="mb-0">
+                  <router-link class="text-dark" :to="{ name: 'item', params: { slug: item.slug } }">
+                    {{ item.name }}
+                  </router-link>
+                </p>
                 <p class="text-muted mb-0">In {{ item.storeCount }} store{{ item.storeCount == 1 ? '' : 's'}}</p></td>
-              <td></td>
               <td>${{ item.bestPrice }}</td>
             </tr>
           </table>
@@ -103,6 +106,7 @@ export default {
   created: function () {
     eventBus.$on('setCurrentPage', (page) => {
       this.currentPage = page
+      this.scrollToTop()
     })
     eventBus.$on('remoteUpdateItems', () => {
       this.getItems()
@@ -120,7 +124,6 @@ export default {
   },
   methods: {
     getItems: function () {
-      this.isLoading = 1
       this.searchTerm = this.$route.query.s
 
       let searchParams = {
@@ -155,10 +158,13 @@ export default {
         })
     },
     imageUrl: function (sku) {
-      return process.env.VUE_APP_STATIC_URL + sku + '.jpeg'
+      return process.env.VUE_APP_STATIC_URL + 'items/' + sku + '.jpeg'
     },
     orderChange: function () {
       this.getItems()
+    },
+    scrollToTop () {
+      window.scrollTo(0, 0)
     }
   },
   name: 'Items'
