@@ -134,17 +134,20 @@ export default {
           params: paramObj
         })
         .then((res) => {
-          this.storeData = res.data
-          this.actualCount = res.data.length
+          this.storeData = res.data.items
+          this.actualCount = res.data.count
+          this.totalCount = res.data.totalCount
           this.isLoading = 0
         })
     },
     setRadiusParams () {
-      if (this.$route.query.r != null) {
+      console.log('r' in this.$route.query)
+      if ('r' in this.$route.query) {
         this.radiusMode = 'near'
         this.filterRadius = parseInt(this.$route.query.r)
+        eventBus.$emit('getLatLng')
       }
-      eventBus.$emit('getLatLng')
+
     },
     orderUpdated () {
       if (this.lat === null || this.lng === null) {
