@@ -4,8 +4,9 @@
     <div id="Stores" class="container-fluid pt-3">
       <div class="row">
         <div class="col-1"/>
-        <div class="col-3 text-left filter-div bg-dark">
-
+        <div class="col-3 text-left filter-div">
+          <SearchRadiusFilters @updateMode="(newMode) => {this.radiusMode = newMode}"
+                               @updateRadius="(rad, lati, long) => {this.filterRadius = rad; this.lat = lati; this.lng = long}"/>
         </div>
 
         <div class="col-7">
@@ -21,8 +22,13 @@
 
               <div class="col-6">
                 <div class="float-right">
-                  <label >Sort by: </label>
-
+                  <label for="sortby">Sort by: </label>
+                  <select id="sortby" v-model="order" class="float-right no-outline pointer-cursor" @change="orderUpdated">
+                    <option value="dist-asc">Distance low</option>
+                    <option value="dist-desc">Distance high</option>
+                    <option value="price-desc">Price high</option>
+                    <option value="price-asc" selected="selected">Price low</option>
+                  </select>
                 </div>
               </div>
 
@@ -37,6 +43,7 @@
               <td>
                 <p class="mb-0">{{ store.storeName }}</p>
                 <p class="text-muted mb-0">{{ store.brandName }}</p></td>
+              <td>{{ store.distance }}</td>
               <td v-if="store.salePrice !== null"><s>${{ store.price }}</s><br/> ${{ store.salePrice }}</td>
               <td v-else>${{ store.price }}</td>
             </tr>
@@ -54,6 +61,7 @@
 <script>
 import Item from '@/components/Item'
 import Pagination from '@/components/Pagination'
+import SearchRadiusFilters from '@/components/SearchRadiusFilters'
 import {eventBus} from '@/main.js'
 export default {
   data () {
@@ -65,12 +73,18 @@ export default {
       itemsPerPage: 24,
       slug: null,
       storeData: null,
-      itemData: null
+      itemData: null,
+      order: 'price-asc',
+      lat: null,
+      lng: null,
+      radiusMode: 'all',
+      filterRadius: 50
     }
   },
   components: {
     Item,
-    Pagination
+    Pagination,
+    SearchRadiusFilters
   },
   created () {
     this.slug = this.$route.params.slug
@@ -84,6 +98,7 @@ export default {
   },
   mounted () {
     this.setStoresCount()
+    this.setRadiusParams()
     this.getStores()
   },
   computed: {
@@ -98,19 +113,53 @@ export default {
   },
   methods: {
     getStores () {
+      let paramObj = {
+        mode: 'slug',
+        count: this.itemsPerPage,
+        index: ((this.currentPage - 1) * this.itemsPerPage)
+      }
+
+      if ((this.filterRadius !== null || this.lng !== null || this.lat !== null) && this.radiusMode === 'near') {
+        paramObj.r = this.filterRadius
+      } else {
+        eventBus.$emit('searchRadiusUpdateMode2', 'all')
+      }
+
+      paramObj.order = this.order
+      paramObj.lat = this.lat
+      paramObj.lng = this.lng
+
       this.$http.get(`${process.env.API_URL}/items/${this.slug}/stores`,
         {
-          params: {
-            mode: 'slug',
-            count: this.itemsPerPage,
-            index: ((this.currentPage - 1) * this.itemsPerPage)
-          }
+          params: paramObj
         })
         .then((res) => {
           this.storeData = res.data
           this.actualCount = res.data.length
           this.isLoading = 0
         })
+    },
+    setRadiusParams () {
+      if (this.$route.query.r != null) {
+        this.radiusMode = 'near'
+        this.filterRadius = parseInt(this.$route.query.r)
+      }
+      eventBus.$emit('getLatLng')
+    },
+    orderUpdated () {
+      if (this.lat === null || this.lng === null) {
+        this.$getLocation()
+          .then(coordinates => {
+            this.lat = coordinates.lat
+            this.lng = coordinates.lng
+            this.getStores()
+          }).catch(() => {
+            this.order = 'price-asc'
+            this.getStores()
+          })
+      } else {
+        this.getStores()
+      }
     },
     setStoresCount () {
       this.$http.get(`${process.env.API_URL}/items/${this.slug}/stores`,
