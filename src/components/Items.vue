@@ -50,7 +50,7 @@
               </td>
               <td>
                 <p class="mb-0">
-                  <router-link class="text-dark" :to="{ name: 'item', params: { slug: item.slug } }">
+                  <router-link class="text-dark" :to="getLinkParams(item)">
                     {{ item.name }}
                   </router-link>
                 </p>
@@ -142,7 +142,7 @@ export default {
         searchParams.lng = this.lng
         searchParams.lat = this.lat
       } else {
-        eventBus.$emit('searchRadiusUpdateMode', 'all')
+        eventBus.$emit('searchRadiusUpdateMode3', 'all')
       }
 
       this.$http.get(process.env.API_URL + '/items',
@@ -156,6 +156,13 @@ export default {
         .catch((res) => {
           console.log('Error ' + res)
         })
+    },
+    getLinkParams (item) {
+      let params = { name: 'item', params: { slug: item.slug }, query: {} }
+      if (this.radiusMode === 'near') {
+        params.query.r = this.filterRadius
+      }
+      return params
     },
     imageUrl: function (sku) {
       return process.env.VUE_APP_STATIC_URL + 'items/' + sku + '.jpeg'
