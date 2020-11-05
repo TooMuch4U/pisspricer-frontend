@@ -50,6 +50,9 @@ export default {
       }
       this.mode = 'near'
     })
+    eventBus.$on('getLatLng', () => {
+      this.nearMeClicked()
+    })
   },
   methods: {
     allClicked () {
