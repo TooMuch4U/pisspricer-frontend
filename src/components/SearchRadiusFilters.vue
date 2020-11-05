@@ -54,11 +54,20 @@ export default {
       this.nearMeClicked()
     })
   },
+  mounted () {
+    this.setRadiusParams()
+  },
   methods: {
     allClicked () {
       this.mode = 'all'
       this.$emit('updateMode', this.mode)
       eventBus.$emit('remoteUpdateItems')
+    },
+    setRadiusParams () {
+      if (this.$route.query.r != null) {
+        this.mode = 'near'
+        this.radius = parseInt(this.$route.query.r)
+      }
     },
     nearMeClicked () {
       this.mode = 'near'
