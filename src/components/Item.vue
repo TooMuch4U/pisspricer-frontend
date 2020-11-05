@@ -6,7 +6,7 @@
         <table class="m-auto">
           <tr>
             <td>
-              <img v-if="itemData.hasImage" class="mx-3" :src="`${staticUrl}items/${itemData.sku}.jpeg`">
+              <img v-if="itemData.hasImage" class="mr-3" :src="`${staticUrl}items/${itemData.sku}.jpeg`">
               </td>
             <td class="text-left">
               <h5 class="m-0"><b>{{ itemData.name }}</b></h5>
