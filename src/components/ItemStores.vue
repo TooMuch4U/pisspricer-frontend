@@ -146,7 +146,6 @@ export default {
         this.filterRadius = parseInt(this.$route.query.r)
         eventBus.$emit('getLatLng')
       }
-
     },
     orderUpdated () {
       if (this.lat === null || this.lng === null) {
