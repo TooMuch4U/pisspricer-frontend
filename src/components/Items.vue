@@ -101,6 +101,7 @@ export default {
     SearchRadiusFilters
   },
   mounted: function () {
+    this.setRadiusParams()
     this.getItems()
   },
   created: function () {
@@ -156,6 +157,13 @@ export default {
         .catch((res) => {
           console.log('Error ' + res)
         })
+    },
+    setRadiusParams () {
+      if ('r' in this.$route.query) {
+        this.radiusMode = 'near'
+        this.filterRadius = parseInt(this.$route.query.r)
+        eventBus.$emit('getLatLng')
+      }
     },
     getLinkParams (item) {
       let params = { name: 'item', params: { slug: item.slug }, query: {} }
