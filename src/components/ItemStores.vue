@@ -141,7 +141,6 @@ export default {
         })
     },
     setRadiusParams () {
-      console.log('r' in this.$route.query)
       if ('r' in this.$route.query) {
         this.radiusMode = 'near'
         this.filterRadius = parseInt(this.$route.query.r)
