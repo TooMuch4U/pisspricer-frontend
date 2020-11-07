@@ -62,6 +62,7 @@ export default {
       this.mode = 'all'
       this.$emit('updateMode', this.mode)
       eventBus.$emit('remoteUpdateItems')
+      this.updateUrl()
     },
     setRadiusParams () {
       if (this.$route.query.r != null) {
@@ -91,6 +92,16 @@ export default {
         this.$emit('updateMode', this.mode)
         this.rangeUpdated()
       }
+      this.updateUrl()
+    },
+    updateUrl () {
+      let oldQuery = {...this.$route.query}
+      if (this.mode === 'near') {
+        oldQuery.r = this.radius
+      } else {
+        delete oldQuery.r
+      }
+      this.$router.replace({ query: oldQuery })
     },
     rangeUpdated () {
       this.$emit('updateRadius', parseInt(this.radius), this.lat, this.lng)
