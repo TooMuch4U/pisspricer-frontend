@@ -101,7 +101,7 @@ export default {
       } else {
         delete oldQuery.r
       }
-      this.$router.replace({ query: oldQuery })
+      this.$router.replace({ query: oldQuery }).catch(() => {})
     },
     rangeUpdated () {
       this.$emit('updateRadius', parseInt(this.radius), this.lat, this.lng)
