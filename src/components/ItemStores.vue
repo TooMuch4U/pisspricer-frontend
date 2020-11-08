@@ -42,8 +42,9 @@
               </td>
               <td>
                 <p class="mb-0">{{ store.storeName }}</p>
-                <p class="text-muted mb-0">{{ store.brandName }}</p></td>
-              <td>{{ store.distance }}</td>
+                <p class="text-muted mb-0" v-if="store.distance === 0">{{ store.brandName }}</p>
+                <p class="text-muted mb-0" v-else>{{ store.brandName }}, {{ store.distance.toFixed(1) }}km</p>
+              </td>
               <td v-if="store.salePrice !== null"><s>${{ store.price }}</s><br/> ${{ store.salePrice }}</td>
               <td v-else>${{ store.price }}</td>
             </tr>
@@ -141,11 +142,18 @@ export default {
         })
     },
     setRadiusParams () {
-      if ('r' in this.$route.query) {
-        this.radiusMode = 'near'
-        this.filterRadius = parseInt(this.$route.query.r)
-        eventBus.$emit('getLatLng')
-      }
+      let that = this
+      navigator.permissions.query({name: 'geolocation'})
+        .then(function (status) {
+          if ('r' in that.$route.query) {
+            that.radiusMode = 'near'
+            that.filterRadius = parseInt(that.$route.query.r)
+            eventBus.$emit('getLatLng', 'near')
+          } else if (status.state === 'granted') {
+            that.radiusMode = 'all'
+            that.getLatLng()
+          }
+        })
     },
     orderUpdated () {
       if (this.lat === null || this.lng === null) {
@@ -175,6 +183,17 @@ export default {
     },
     itemImageUrl (sku) {
       return process.env.VUE_APP_STATIC_URL + 'items/' + sku + '.jpeg'
+    },
+    getLatLng () {
+      this.$getLocation()
+        .then(coordinates => {
+          this.lat = coordinates.lat
+          this.lng = coordinates.lng
+        }).catch((err) => {
+          if (err === 'no position access') {
+            console.log('No access')
+          }
+        })
     },
     brandImageUrl (brandId) {
       return `${process.env.VUE_APP_STATIC_URL}brands/${brandId}.jpeg`
