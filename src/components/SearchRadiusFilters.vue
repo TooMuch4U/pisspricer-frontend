@@ -50,8 +50,12 @@ export default {
       }
       this.mode = 'near'
     })
-    eventBus.$on('getLatLng', () => {
-      this.nearMeClicked()
+    eventBus.$on('getLatLng', (mode) => {
+      if (mode === 'near') {
+        this.nearMeClicked()
+      } else {
+        this.allClicked()
+      }
     })
   },
   mounted () {
