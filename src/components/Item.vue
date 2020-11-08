@@ -3,7 +3,7 @@
     <div class="row m-1">
       <div class="col-1"></div>
       <div class="col-10 bottom-border pb-3">
-        <table class="m-auto">
+        <table class="m-auto" v-if="itemData !== null">
           <tr>
             <td>
               <img v-if="itemData.hasImage" class="mr-3" :src="`${staticUrl}items/${itemData.sku}.jpeg`">
