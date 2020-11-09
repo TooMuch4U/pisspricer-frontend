@@ -1,39 +1,60 @@
 import VueGeolocation from 'vue-browser-geolocation/src'
 
 export default {
-
+  name: 'locationStore',
   data: {
     lat: null,
     lng: null,
     radius: 50
   },
   updateLocation () {
-    VueGeolocation.$getLocation()
-      .then(coordinates => {
-        this.lat = coordinates.lat
-        this.lng = coordinates.lng
-        return {lat: coordinates.lat, lng: coordinates.lng}
-      }).catch(() => {
-        return {lat: null, lng: null}
-      })
+    return new Promise((resolve, reject) => {
+      VueGeolocation.getLocation()
+        .then(coordinates => {
+          this.data.lat = coordinates.lat
+          this.data.lng = coordinates.lng
+          console.log('set lat to: ' + this.data.lat)
+          resolve({lat: coordinates.lat, lng: coordinates.lng})
+        }).catch((err) => {
+          reject(err)
+        })
+    })
   },
   getLocation (noPrompt = false) {
-    if (this.lat === null) {
-      if (noPrompt) {
-        navigator.permissions.query({name: 'geolocation'})
-          .then(function (status) {
-            if (status.state === 'granted') {
-              return this.updateLocation()
-            } else {
-              return {lat: null, lng: null}
-            }
-          })
+    return new Promise((resolve, reject) => {
+      if (this.data.lat === null) {
+        if (noPrompt) {
+          const that = this
+          navigator.permissions.query({name: 'geolocation'})
+            .then(function (status) {
+              if (status.state === 'granted') {
+                that.updateLocation()
+                  .then((loc) => {
+                    resolve(loc)
+                  }).catch((err) => {
+                    reject(err)
+                  })
+              } else {
+                reject(new Error('Location not available'))
+              }
+            })
+        } else {
+          this.updateLocation()
+            .then((loc) => {
+              resolve(loc)
+            }).catch((err) => {
+              reject(err)
+            })
+        }
       } else {
-        return this.updateLocation()
+        resolve({lat: this.lat, lng: this.lng})
       }
-    } else {
-      return {lat: this.lat, lng: this.lng}
-    }
+    })
+  },
+  test () {
+    return new Promise((resolve, reject) => {
+      resolve({name: 'test'})
+    })
   },
   setRadius (radius) {
     this.radius = radius
