@@ -13,7 +13,6 @@ export default {
         .then(coordinates => {
           this.data.lat = coordinates.lat
           this.data.lng = coordinates.lng
-          console.log('set lat to: ' + this.data.lat)
           resolve({lat: coordinates.lat, lng: coordinates.lng})
         }).catch((err) => {
           reject(err)
