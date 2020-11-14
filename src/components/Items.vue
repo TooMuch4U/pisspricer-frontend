@@ -73,6 +73,7 @@ import Pagination from '@/components/Pagination'
 import RegionFilters from '@/components/RegionFilters'
 import CategoryFilters from '@/components/CategoryFilters'
 import SearchRadiusFilters from '@/components/SearchRadiusFilters'
+import LocationStore from '../stores/LocationStore'
 
 export default {
   data () {
@@ -138,10 +139,13 @@ export default {
         searchParams.regionId = this.filterRegion
       }
 
-      if (this.filterRadius !== null && this.lng !== null && this.lat !== null && this.radiusMode === 'near') {
+      let lng = LocationStore.data.lng
+      let lat = LocationStore.data.lat
+
+      if (this.filterRadius !== null && lng !== null && lat !== null && this.radiusMode === 'near') {
         searchParams.r = this.filterRadius
-        searchParams.lng = this.lng
-        searchParams.lat = this.lat
+        searchParams.lng = lng
+        searchParams.lat = lat
       } else {
         eventBus.$emit('searchRadiusUpdateMode3', 'all')
       }
