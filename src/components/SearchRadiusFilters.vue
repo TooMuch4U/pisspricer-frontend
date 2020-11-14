@@ -52,7 +52,6 @@ export default {
   },
   mounted () {
     this.setRadiusParams()
-    console.log(typeof this.$route.query.r)
     if (typeof this.$route.query.r !== 'undefined') {
       this.radius = this.$route.query.r
       this.nearMeClicked()
