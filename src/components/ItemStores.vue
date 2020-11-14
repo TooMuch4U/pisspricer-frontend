@@ -64,6 +64,7 @@ import Item from '@/components/Item'
 import Pagination from '@/components/Pagination'
 import SearchRadiusFilters from '@/components/SearchRadiusFilters'
 import {eventBus} from '@/main.js'
+import LocationStore from '@/stores/LocationStore.js'
 export default {
   data () {
     return {
@@ -119,16 +120,18 @@ export default {
         count: this.itemsPerPage,
         index: ((this.currentPage - 1) * this.itemsPerPage)
       }
+      const lat = LocationStore.data.lat
+      const lng = LocationStore.data.lng
 
-      if ((this.filterRadius !== null || this.lng !== null || this.lat !== null) && this.radiusMode === 'near') {
+      if ((this.filterRadius !== null || lat !== null || lng !== null) && this.radiusMode === 'near') {
         paramObj.r = this.filterRadius
       } else {
         eventBus.$emit('searchRadiusUpdateMode2', 'all')
       }
 
       paramObj.order = this.order
-      paramObj.lat = this.lat
-      paramObj.lng = this.lng
+      paramObj.lat = lat
+      paramObj.lng = lng
 
       this.$http.get(`${process.env.API_URL}/items/${this.slug}/stores`,
         {
@@ -143,17 +146,18 @@ export default {
     },
     setRadiusParams () {
       let that = this
-      navigator.permissions.query({name: 'geolocation'})
-        .then(function (status) {
-          if ('r' in that.$route.query) {
-            that.radiusMode = 'near'
-            that.filterRadius = parseInt(that.$route.query.r)
-            eventBus.$emit('getLatLng', 'near')
-          } else if (status.state === 'granted') {
-            that.radiusMode = 'all'
-            that.getLatLng()
-          }
-        })
+      if (typeof this.$route.query.r !== 'undefined') {
+        that.radiusMode = 'near'
+        that.filterRadius = parseInt(that.$route.query.r)
+        LocationStore.getLocation()
+          .then((loc) => {
+            that.getStores()
+          }).catch((err) => {
+            console.log(err)
+          })
+      } else {
+        that.radiusMode = 'all'
+      }
     },
     orderUpdated () {
       if (this.lat === null || this.lng === null) {
@@ -183,17 +187,6 @@ export default {
     },
     itemImageUrl (sku) {
       return process.env.VUE_APP_STATIC_URL + 'items/' + sku + '.jpeg'
-    },
-    getLatLng () {
-      this.$getLocation()
-        .then(coordinates => {
-          this.lat = coordinates.lat
-          this.lng = coordinates.lng
-        }).catch((err) => {
-          if (err === 'no position access') {
-            console.log('No access')
-          }
-        })
     },
     brandImageUrl (brandId) {
       return `${process.env.VUE_APP_STATIC_URL}brands/${brandId}.jpeg`
