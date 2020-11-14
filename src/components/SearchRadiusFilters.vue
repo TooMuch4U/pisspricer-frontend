@@ -29,6 +29,7 @@
 
 <script>
 import {eventBus} from '@/main.js'
+import LocationStore from '@/stores/LocationStore.js'
 export default {
   name: 'SearchRadiusFilters',
   data () {
@@ -37,8 +38,6 @@ export default {
       mode: 'all',
       max: 50,
       min: 1,
-      lat: null,
-      lng: null,
       loading: 0
     }
   },
@@ -50,16 +49,14 @@ export default {
       }
       this.mode = 'near'
     })
-    eventBus.$on('getLatLng', (mode) => {
-      if (mode === 'near') {
-        this.nearMeClicked()
-      } else {
-        this.allClicked()
-      }
-    })
   },
   mounted () {
     this.setRadiusParams()
+    console.log(typeof this.$route.query.r)
+    if (typeof this.$route.query.r !== 'undefined') {
+      this.radius = this.$route.query.r
+      this.nearMeClicked()
+    }
   },
   methods: {
     allClicked () {
@@ -76,27 +73,25 @@ export default {
     },
     nearMeClicked () {
       this.mode = 'near'
-      if (this.lat === null) {
-        this.loading = 1
-        this.$getLocation()
-          .then(coordinates => {
-            this.lat = coordinates.lat
-            this.lng = coordinates.lng
-            this.$emit('updateMode', this.mode)
-            this.rangeUpdated()
-            this.loading = 0
-          }).catch((err) => {
-            if (err === 'no position access') {
-              console.log('No access')
+      this.loading = 1
+      if (LocationStore.data.lat === null) {
+        LocationStore.getLocation()
+          .then((loc) => {
+            if (loc.lat !== null) {
+              this.$emit('updateMode', this.mode)
+              this.rangeUpdated()
+            } else {
+              this.allClicked()
             }
+            this.updateUrl()
             this.loading = 0
-            this.allClicked()
-          })
+          }).catch((err) => { console.log(err) })
       } else {
         this.$emit('updateMode', this.mode)
         this.rangeUpdated()
+        this.updateUrl()
+        this.loading = 0
       }
-      this.updateUrl()
     },
     updateUrl () {
       let oldQuery = {...this.$route.query}
