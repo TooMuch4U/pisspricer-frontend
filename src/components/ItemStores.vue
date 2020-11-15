@@ -42,8 +42,8 @@
               </td>
               <td>
                 <p class="mb-0">{{ store.storeName }}</p>
-                <p class="text-muted mb-0" v-if="store.distance === 0">{{ store.brandName }}</p>
-                <p class="text-muted mb-0" v-else>{{ store.brandName }}, {{ store.distance.toFixed(1) }}km</p>
+                <p class="text-muted mb-0" v-if="store.distance === 0">Updated {{ getDaysAgoStr(store.dateChecked) }}</p>
+                <p class="text-muted mb-0" v-else>{{ getDaysAgo(store.dateChecked) }}, {{ store.distance.toFixed(1) }}km</p>
               </td>
               <td v-if="store.salePrice !== null"><s>${{ store.price }}</s><br/> ${{ store.salePrice }}</td>
               <td v-else>${{ store.price }}</td>
@@ -99,7 +99,6 @@ export default {
     })
   },
   mounted () {
-    this.setStoresCount()
     this.setRadiusParams()
     this.getStores()
   },
@@ -174,16 +173,24 @@ export default {
         this.getStores()
       }
     },
-    setStoresCount () {
-      this.$http.get(`${process.env.API_URL}/items/${this.slug}/stores`,
-        {
-          params: {
-            mode: 'slug'
-          }
-        })
-        .then((res) => {
-          this.totalCount = res.data.length
-        })
+    getDaysAgoStr (dateStr) {
+      let today = new Date()
+      let past = new Date(dateStr)
+      let days = (today - past) / (1000 * 3600 * 24)
+      let hours = (today - past) / (1000 * 3600)
+      if (hours < 1) {
+        return 'in the last hour'
+      } else if (days < 1) {
+        return 'today'
+      } else if (days < 2) {
+        return 'yesterday'
+      } else if (days < 7) {
+        return parseInt(days) + ' ago'
+      } else if (days < 30) {
+        return 'over a week ago'
+      } else {
+        return 'over a month'
+      }
     },
     itemImageUrl (sku) {
       return process.env.VUE_APP_STATIC_URL + 'items/' + sku + '.jpeg'
