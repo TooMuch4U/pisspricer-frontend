@@ -7,7 +7,6 @@
           <CategoryFilters @update="(catFilters) => {this.filterCats = catFilters}"/>
           <SearchRadiusFilters @updateMode="(newMode) => {this.radiusMode = newMode}"
                                @updateRadius="(rad, lati, long) => {this.filterRadius = rad; this.lat = lati; this.lng = long}"/>
-          <RegionFilters @update="(regId) => {this.filterRegion = regId}"/>
 
           <div>
             <h5 class="mb-1">Price</h5>
