@@ -43,7 +43,7 @@
               <td>
                 <p class="mb-0">{{ store.storeName }}</p>
                 <p class="text-muted mb-0" v-if="store.distance === 0">Updated {{ getDaysAgoStr(store.dateChecked) }}</p>
-                <p class="text-muted mb-0" v-else>{{ getDaysAgo(store.dateChecked) }}, {{ store.distance.toFixed(1) }}km</p>
+                <p class="text-muted mb-0" v-else>Updated {{ getDaysAgoStr(store.dateChecked) }}, {{ store.distance.toFixed(1) }}km</p>
               </td>
               <td v-if="store.salePrice !== null"><s>${{ store.price }}</s><br/> ${{ store.salePrice }}</td>
               <td v-else>${{ store.price }}</td>
