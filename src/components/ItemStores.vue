@@ -191,7 +191,7 @@ export default {
       } else if (days < 30) {
         return 'over a week ago'
       } else {
-        return 'over a month'
+        return 'over a month ago'
       }
     },
     itemImageUrl (sku) {
