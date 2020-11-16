@@ -99,6 +99,8 @@ export default {
     })
   },
   mounted () {
+    let that = this
+    LocationStore.getLocation(true).then((_) => { that.getStores() })
     this.setRadiusParams()
     this.getStores()
   },
