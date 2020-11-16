@@ -50,11 +50,6 @@ export default {
       }
     })
   },
-  test () {
-    return new Promise((resolve, reject) => {
-      resolve({name: 'test'})
-    })
-  },
   setRadius (radius) {
     this.radius = radius
   },
