@@ -105,6 +105,10 @@ export default {
   border-bottom: black 1px;
 }
 
+#ul {
+  background-color: white;
+}
+
 #suggestions {
   position: absolute;
   border-bottom: none;
@@ -113,7 +117,6 @@ export default {
   /*position the autocomplete items to be the same width as the container:*/
   left: 35%;
   right: 35%;
-  background-color: white;
 }
 
 .suggestion-item:first-child {
