@@ -1,4 +1,5 @@
 <template>
+  <div>
   <nav class="navbar navbar-expand-lg navbar-light border-bottom rounded text-center">
       <ul class="navbar-nav m-auto">
         <li class="nav-item">
@@ -16,14 +17,23 @@
                    @keyup.enter="searchItems">
         </li>
       </ul>
-      <div class="mx-auto" id="suggestions">
-        <ul class="list-group">
-          <li class="list-group-item" v-for="item in items" :key="item.sku">
-            {{ item.name }}
-          </li>
-        </ul>
-      </div>
   </nav>
+    <div class="mx-auto" id="suggestions" v-if="items !== null">
+      <ul class="list-group">
+        <li class="list-group-item suggestion-item text-left" v-for="item in items" :key="item.sku">
+          <img v-if="item.hasImage" class="item-image float-left mr-3" :src="imageSrc(item.sku)">
+          <img v-else class="item-image float-left mr-3" src="@/assets/logo.png">
+          {{ item.name }}
+        </li>
+        <li class="list-group-item">
+          <a id="search-link"
+             v-on:click="linkClicked">
+            Show all {{itemsTotalCount}} results →
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -47,6 +57,13 @@ export default {
         eventBus.$emit('updateCurrentPage', 1)
         eventBus.$emit('remoteUpdateItems')
       }
+    },
+    linkClicked () {
+      this.searchItems()
+      this.items = null
+    },
+    imageSrc (sku) {
+      return process.env.VUE_APP_STATIC_URL + 'items/' + sku + '.jpeg'
     },
     getPreview () {
       if (this.searchTerm.length > 1) {
@@ -90,14 +107,34 @@ export default {
 
 #suggestions {
   position: absolute;
-  border: 1px solid #d4d4d4;
   border-bottom: none;
   border-top: none;
   z-index: 99;
   /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
   left: 35%;
   right: 35%;
   background-color: white;
+}
+
+.suggestion-item:first-child {
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.suggestion-item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#search-link {
+  color: #007bff;
+  cursor: pointer;
+}
+
+.item-image {
+  max-width: 20px;
+  height: 20px;
 }
 </style>
