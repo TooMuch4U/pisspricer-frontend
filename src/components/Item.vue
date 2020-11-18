@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import {eventBus} from '@/main.js'
 export default {
   data () {
     return {
@@ -56,6 +57,11 @@ export default {
   props: ['slug'],
   mounted () {
     this.getItem()
+  },
+  created () {
+    eventBus.$on('updateItemPage', () => {
+      this.getItem()
+    })
   },
   methods: {
     getItem () {

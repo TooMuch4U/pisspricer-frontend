@@ -97,12 +97,13 @@ export default {
     eventBus.$on('remoteUpdateItems', () => {
       this.getStores()
     })
+    eventBus.$on('updateItemPage', () => {
+      this.slug = this.$route.params.slug
+      this.loadPage()
+    })
   },
   mounted () {
-    let that = this
-    LocationStore.getLocation(true).then((_) => { that.getStores() })
-    this.setRadiusParams()
-    this.getStores()
+    this.loadPage()
   },
   computed: {
     pages () {
@@ -115,6 +116,12 @@ export default {
     }
   },
   methods: {
+    loadPage () {
+      let that = this
+      LocationStore.getLocation(true).then((_) => { that.getStores() })
+      this.setRadiusParams()
+      this.getStores()
+    },
     getStores () {
       let paramObj = {
         mode: 'slug',

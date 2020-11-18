@@ -14,20 +14,23 @@
                    v-model="searchTerm"
                    placeholder="Search"
                    @keyup="getPreview"
-                   @keyup.enter="searchItems">
+                   @keyup.enter="searchClicked">
         </li>
       </ul>
   </nav>
-    <div class="mx-auto" id="suggestions" v-if="items !== null">
+    <div class="mx-auto" id="suggestions" v-if="items !== null" v-click-outside="hideWindow">
       <ul class="list-group">
-        <li class="list-group-item suggestion-item text-left" v-for="item in items" :key="item.sku">
+        <li class="list-group-item suggestion-item text-left"
+            v-for="item in items"
+            :key="item.sku"
+            v-on:click="itemClicked(item)">
           <img v-if="item.hasImage" class="item-image float-left mr-3" :src="imageSrc(item.sku)">
           <img v-else class="item-image float-left mr-3" src="@/assets/logo.png">
           {{ item.name }}
         </li>
         <li class="list-group-item">
           <a id="search-link"
-             v-on:click="linkClicked">
+             v-on:click="searchClicked">
             Show all {{itemsTotalCount}} results →
           </a>
         </li>
@@ -58,9 +61,21 @@ export default {
         eventBus.$emit('remoteUpdateItems')
       }
     },
-    linkClicked () {
-      this.searchItems()
+    hideWindow () {
       this.items = null
+    },
+    searchClicked () {
+      this.searchItems()
+      this.hideWindow()
+    },
+    itemClicked (item) {
+      this.$router
+        .push({ name: 'item', params: { slug: item.slug } }) // Change page to items page
+        .catch(() => {}) // Catch error if already on items page
+      if (this.$route.name === 'item') {
+        eventBus.$emit('updateItemPage')
+      }
+      this.hideWindow()
     },
     imageSrc (sku) {
       return process.env.VUE_APP_STATIC_URL + 'items/' + sku + '.jpeg'
@@ -123,6 +138,11 @@ export default {
   border-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.suggestion-item:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
 }
 
 .suggestion-item {
