@@ -60,7 +60,6 @@ export default {
         eventBus.$emit('updateCurrentPage', 1)
         eventBus.$emit('remoteUpdateItems')
       }
-      this.searchTerm = null
     },
     hideWindow () {
       this.items = null
