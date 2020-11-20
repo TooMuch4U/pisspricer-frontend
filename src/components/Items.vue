@@ -7,7 +7,6 @@
           <CategoryFilters @update="(catFilters) => {this.filterCats = catFilters}"/>
           <SearchRadiusFilters @updateMode="(newMode) => {this.radiusMode = newMode}"
                                @updateRadius="(rad, lati, long) => {this.filterRadius = rad; this.lat = lati; this.lng = long}"/>
-
           <div>
             <h5 class="mb-1">Price</h5>
             <input type="range" min="0" max="1000">
@@ -209,5 +208,6 @@ export default {
 
 .filter-div {
   border-right: 1px solid #dee2e6!important;
+  min-height: 400px;
 }
 </style>
