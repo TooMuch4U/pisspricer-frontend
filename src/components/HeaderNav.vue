@@ -13,7 +13,7 @@
                    type="text"
                    v-model="searchTerm"
                    placeholder="Search"
-                   @keyup="getPreview"
+                   @keyup="getPreview($event)"
                    @keyup.enter="searchClicked">
         </li>
       </ul>
@@ -60,6 +60,7 @@ export default {
         eventBus.$emit('updateCurrentPage', 1)
         eventBus.$emit('remoteUpdateItems')
       }
+      this.searchTerm = null
     },
     hideWindow () {
       this.items = null
@@ -80,8 +81,8 @@ export default {
     imageSrc (sku) {
       return process.env.VUE_APP_STATIC_URL + 'items/' + sku + '.jpeg'
     },
-    getPreview () {
-      if (this.searchTerm.length > 1) {
+    getPreview (event) {
+      if (this.searchTerm.length > 1 && event.key !== 'Enter') {
         // if current search term is longer than 1 char
         this.$http.get(process.env.API_URL + '/items',
           { params: {
