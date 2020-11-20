@@ -194,7 +194,7 @@ export default {
       } else if (days < 2) {
         return 'yesterday'
       } else if (days < 7) {
-        return parseInt(days) + ' ago'
+        return parseInt(days) + ' days ago'
       } else if (days < 30) {
         return 'over a week ago'
       } else {
