@@ -42,9 +42,9 @@
 
           <table class="text-left table" v-if="item_list != null">
             <tr v-for="item in item_list" v-bind:key="item.sku">
-              <td class="text-center">
-                <img v-if="item.hasImage" class="item-image" :src="imageUrl(item.sku)">
-                <img v-else class="item-image" src="@/assets/logo.png">
+              <td class="text-center image-div">
+                  <img v-if="item.hasImage" class="item-image align-middle" :src="imageUrl(item.sku)">
+                  <img v-else class="item-image" src="@/assets/logo.png">
               </td>
               <td>
                 <p class="mb-0">
@@ -191,8 +191,14 @@ export default {
 <style scoped>
 .item-image {
   max-width: 50px;
-  height: 50px;
+  height: auto;
+  max-height: 50px
 }
+
+.image-div {
+  width: 80px;
+}
+
 .no-outline {
   outline: none;
   border: 0;
