@@ -4,7 +4,6 @@
       <div class="col-2"></div>
       <div class="col-8">
         <h4>Compare prices from New Zealand liquor stores, and get the most beer for your buck.</h4>
-        Test
       </div>
       <div class="col-2"></div>
     </div>
