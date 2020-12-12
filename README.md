@@ -1,5 +1,5 @@
-# pisspricer
-
+# Pisspricer Frontend
+https://github.com/TooMuch4U/pisspricer-frontend/workflows/DEPLOY%20TO%20STAGING/badge.svg
 > A Vue.js project
 
 ## Build Setup
