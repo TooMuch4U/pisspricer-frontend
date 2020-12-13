@@ -130,8 +130,8 @@ export default {
   border-top: none;
   z-index: 99;
   /*position the autocomplete items to be the same width as the container:*/
-  left: 35%;
-  right: 35%;
+  left: 10%;
+  right: 10%;
 }
 
 .suggestion-item:first-child {
@@ -160,4 +160,33 @@ export default {
   max-width: 20px;
   height: 20px;
 }
+
+@media (min-width: 576px) {
+  #suggestions {
+    left: 20%;
+    right: 20%;
+  }
+}
+
+@media (min-width: 768px) {
+  #suggestions {
+    left: 25%;
+    right: 25%;
+  }
+}
+
+@media (min-width: 992px) {
+  #suggestions {
+    left: 35%;
+    right: 35%;
+  }
+}
+
+@media (min-width: 1200px) {
+  #suggestions {
+    left: 35%;
+    right: 35%;
+  }
+}
+
 </style>
