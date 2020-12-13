@@ -12,6 +12,7 @@
             <input class="form-control mt-2 input-outline shadow-none"
                    type="text"
                    v-model="searchTerm"
+                   id="search-input"
                    placeholder="Search"
                    @keyup="getPreview($event)"
                    @keyup.enter="searchClicked">
@@ -64,6 +65,7 @@ export default {
       }
     },
     hideWindow () {
+      document.getElementById('search-input').blur()
       this.items = null
     },
     searchClicked () {
