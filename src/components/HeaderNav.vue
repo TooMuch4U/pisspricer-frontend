@@ -24,8 +24,10 @@
             v-for="item in items"
             :key="item.sku"
             v-on:click="itemClicked(item)">
-          <img v-if="item.hasImage" class="item-image float-left mr-3" :src="imageSrc(item.sku)">
-          <img v-else class="item-image float-left mr-3" src="@/assets/logo.png">
+          <div class="img-div mr-3 text-center">
+            <img v-if="item.hasImage" class="item-image" :src="imageSrc(item.sku)">
+            <img v-else class="item-image" src="@/assets/logo.png">
+          </div>
           {{ item.name }}
         </li>
         <li class="list-group-item">
@@ -157,8 +159,14 @@ export default {
 }
 
 .item-image {
-  max-width: 20px;
+  max-width: 40px;
   height: 20px;
+}
+
+.img-div {
+  width: 40px;
+  height: 20px;
+  display: inline-block;
 }
 
 @media (min-width: 576px) {
