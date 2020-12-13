@@ -1,34 +1,32 @@
 <template>
     <div id="Items" class="container-fluid pt-3">
       <div class="row">
-        <div class="col-1"/>
-        <div class="col-3 text-left filter-div">
+        <div class="col-md-1 d-none d-md-block"/>
+        <div class="col-md-3 col-12 text-left">
 
           <CategoryFilters @update="(catFilters) => {this.filterCats = catFilters}"/>
           <SearchRadiusFilters @updateMode="(newMode) => {this.radiusMode = newMode}"
                                @updateRadius="(rad, lati, long) => {this.filterRadius = rad; this.lat = lati; this.lng = long}"/>
-          <div>
-            <h5 class="mb-1">Price</h5>
-            <input type="range" min="0" max="1000">
-          </div>
+
         </div>
+        <div class="col-0 d-none d-md-block filter-div"></div>
 
         <div class="col-7" v-if="isLoading">Loading...</div>
-        <div class="col-7" v-else>
+        <div class="col-12 col-md-7" v-else>
           <div class="container-fluid">
             <div class="row">
 
-              <div class="col-6">
-                <p class="text-left">
+              <div class="col-12 col-sm-5">
+                <p class="text-sm-left mb-0">
                   Showing {{ (this.currentPage - 1) * this.actualCount + 1 }} -
                    {{ this.currentPage * this.actualCount }} of {{ this.totalCount }}
                 </p>
               </div>
 
-              <div class="col-6">
-                <div class="float-right">
+              <div class="col-12 col-sm-7">
+                <div class="float-sm-right">
                   <label for="sortby">Sort by: </label>
-                  <select id="sortby" v-model="order" class="float-right no-outline pointer-cursor" @change="orderChange">
+                  <select id="sortby" v-model="order" class="float-sm-right no-outline pointer-cursor" @change="orderChange">
                     <option value="best-match" selected="selected">Relevance</option>
                     <option value="price-desc">Price high</option>
                     <option value="price-asc">Price low</option>
