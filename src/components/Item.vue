@@ -1,8 +1,8 @@
 <template>
   <div id="Item" class="container-fluid pt-3">
-    <div class="row m-1">
-      <div class="col-1"></div>
-      <div class="col-10 bottom-border pb-3">
+    <div class="row my-1">
+      <div class="col-1 d-none d-md-block"></div>
+      <div class="col-12 col-md-10 bottom-border pb-3">
         <table class="m-auto" v-if="itemData !== null">
           <tr>
             <td>
@@ -41,6 +41,7 @@
         </table>
 
       </div>
+      <div class="col-1 d-none d-md-block"></div>
     </div>
   </div>
 </template>
