@@ -6,7 +6,7 @@
         <table class="m-auto" v-if="itemData !== null">
           <tr>
             <td>
-              <img v-if="itemData.hasImage" class="mr-3" :src="`${staticUrl}items/${itemData.sku}.jpeg`">
+              <img v-if="itemData.hasImage" class="mr-3 item-image-big" :src="`${staticUrl}items/${itemData.sku}.jpeg`">
               </td>
             <td class="text-left">
               <h5 class="m-0"><b>{{ itemData.name }}</b></h5>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+// TODO Update item photo when clicking on search item
 import {eventBus} from '@/main.js'
 export default {
   data () {
@@ -80,7 +81,10 @@ export default {
 </script>
 
 <style scoped>
-  .bottom-border {
-    border-bottom: 1px solid #dee2e6!important;
-  }
+.item-image-big {
+  max-width: 80px;
+}
+.bottom-border {
+  border-bottom: 1px solid #dee2e6!important;
+}
 </style>
