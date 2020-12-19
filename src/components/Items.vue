@@ -42,7 +42,7 @@
             <tr v-for="item in item_list" v-bind:key="item.sku">
               <td class="text-center image-div">
                   <img v-if="item.hasImage" class="item-image align-middle" :src="imageUrl(item.sku)">
-                  <img v-else class="item-image" src="@/assets/logo.png">
+                  <img v-else class="item-image" src="../../static/favicon.png">
               </td>
               <td>
                 <p class="mb-0">

@@ -27,7 +27,7 @@
             v-on:click="itemClicked(item)">
           <div class="img-div mr-3 text-center">
             <img v-if="item.hasImage" class="item-image" :src="imageSrc(item.sku)">
-            <img v-else class="item-image" src="@/assets/logo.png">
+            <img v-else class="item-image" src="../../static/favicon.png">
           </div>
           {{ item.name }}
         </li>
