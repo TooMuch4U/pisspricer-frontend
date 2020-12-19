@@ -3,24 +3,24 @@
     <Item :slug="slug"></Item>
     <div id="Stores" class="container-fluid pt-3">
       <div class="row">
-        <div class="col-1"/>
-        <div class="col-3 text-left filter-div">
+        <div class="col-md-1 d-none d-md-block"/>
+        <div class="col-md-3 col-12 text-left text-left filter-div">
           <SearchRadiusFilters @updateMode="(newMode) => {this.radiusMode = newMode}"
                                @updateRadius="(rad, lati, long) => {this.filterRadius = rad; this.lat = lati; this.lng = long}"/>
         </div>
 
-        <div class="col-7">
+        <div class="col-12 col-md-7">
           <div class="container-fluid">
             <div class="row">
 
-              <div class="col-6">
+              <div class="col-6 px-0">
                 <p class="text-left">
                   Showing {{ (this.currentPage - 1) * this.actualCount + 1 }} -
                   {{ this.currentPage * this.actualCount }} of {{ this.totalCount }}
                 </p>
               </div>
 
-              <div class="col-6">
+              <div class="col-6 px-0">
                 <div class="float-right">
                   <label for="sortby">Sort by: </label>
                   <select id="sortby" v-model="order" class="float-right no-outline pointer-cursor" @change="orderUpdated">
