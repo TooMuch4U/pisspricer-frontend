@@ -216,6 +216,7 @@ export default {
 </script>
 
 <style scoped>
+
   .item-image {
     max-width: 50px;
     height: 50px;

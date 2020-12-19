@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueGeolocation from 'vue-browser-geolocation'
+import './assets/css/styles.css'
 
 Vue.use(VueGeolocation)
 Vue.use(VueAxios, axios)
