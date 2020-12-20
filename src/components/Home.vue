@@ -74,7 +74,7 @@
       </div>
 
       <div class='col-md-2 col-5 text-center'>
-        <a class='browse rob-font text-dark text-decoration-none' href='/items?s=liquers'>
+        <a class='browse rob-font text-dark text-decoration-none' href='/items?s=liqueurs'>
 
           <img class='cat-img' src='@/assets/liqueurs.png'>
           <h5 class='rob-font'>Liqueurs</h5>
