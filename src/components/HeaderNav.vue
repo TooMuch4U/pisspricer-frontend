@@ -90,7 +90,7 @@ export default {
       if (this.searchTerm.length > 1 && event.key !== 'Enter') {
         // if current search term is longer than 1 char
         this.hide = false
-        this.$http.get(process.env.API_URL + '/items',
+        this.$http.get(process.env.API_URL + '/suggestions',
           { params: {
             search: this.searchTerm,
             count: this.itemLimit
