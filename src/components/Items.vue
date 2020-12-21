@@ -51,7 +51,7 @@
                   </router-link>
                 </p>
                 <p class="text-muted mb-0">In {{ item.storeCount }} store{{ item.storeCount == 1 ? '' : 's'}}</p></td>
-              <td>${{ item.bestPrice }}</td>
+              <td>${{ roundPrice(item.bestPrice) }}</td>
             </tr>
           </table>
 
@@ -180,6 +180,9 @@ export default {
     },
     scrollToTop () {
       window.scrollTo(0, 0)
+    },
+    roundPrice (num) {
+      return (Math.round(num * 100) / 100).toFixed(2)
     }
   },
   name: 'Items'
