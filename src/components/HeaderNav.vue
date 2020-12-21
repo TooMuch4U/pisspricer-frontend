@@ -51,7 +51,8 @@ export default {
       items: null,
       itemsCount: 0,
       itemsTotalCount: 0,
-      itemLimit: 5
+      itemLimit: 5,
+      hide: false
     }
   },
   methods: {
@@ -65,6 +66,7 @@ export default {
       }
     },
     hideWindow () {
+      this.hide = true
       document.getElementById('search-input').blur()
       this.items = null
     },
@@ -87,6 +89,7 @@ export default {
     getPreview (event) {
       if (this.searchTerm.length > 1 && event.key !== 'Enter') {
         // if current search term is longer than 1 char
+        this.hide = false
         this.$http.get(process.env.API_URL + '/items',
           { params: {
             search: this.searchTerm,
@@ -96,6 +99,9 @@ export default {
             this.items = res.data.items
             this.itemsCount = res.data.count
             this.itemsTotalCount = res.data.totalCount
+            if (this.hide) {
+              this.hideWindow()
+            }
           })
       } else {
         // Don't get any items, search term not long enough
