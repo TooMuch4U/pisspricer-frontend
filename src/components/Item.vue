@@ -60,10 +60,10 @@ export default {
   mounted () {
     this.getItem()
   },
-  created () {
-    eventBus.$on('updateItemPage', () => {
+  watch: { // Watch to see if the item slug changes
+    slug: function () {
       this.getItem()
-    })
+    }
   },
   methods: {
     getItem () {
