@@ -97,7 +97,7 @@ export default {
     eventBus.$on('remoteUpdateItems', () => {
       this.getStores()
     })
-    eventBus.$on('updateItemPage', () => {
+    eventBus.$on('updateItemStoresPage', () => {
       this.slug = this.$route.params.slug
       this.loadPage()
     })

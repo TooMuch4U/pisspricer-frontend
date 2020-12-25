@@ -79,7 +79,7 @@ export default {
         .push({ name: 'item', params: { slug: item.slug } }) // Change page to items page
         .catch(() => {}) // Catch error if already on items page
       if (this.$route.name === 'item') {
-        eventBus.$emit('updateItemPage')
+        eventBus.$emit('updateItemStoresPage')
       }
       this.hideWindow()
     },
