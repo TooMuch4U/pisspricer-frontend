@@ -22,5 +22,8 @@ export default {
           reject(err.response.statusText)
         })
     })
+  },
+  isLoggedIn () {
+    return (this.authToken !== null)
   }
 }
