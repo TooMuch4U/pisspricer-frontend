@@ -16,14 +16,18 @@
 
       <div class="col-lg-4 col-md-6 col-sm-8 col-12">
 
-        <form>
+        <div v-if="error !== null" class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+
+        <form v-on:submit.prevent>
           <div class="form-group text-left">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <label for="email">Email address</label>
+            <input v-model="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="email">
           </div>
           <div class="form-group text-left">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label for="password">Password</label>
+            <input v-model="password" type="password" class="form-control" id="password" placeholder="Password">
           </div>
 
           <div class="form-row">
@@ -31,7 +35,7 @@
               <button type="button" class="btn btn-block btn-light">Register</button>
             </div>
             <div class="form-group col-6">
-              <button type="submit" class="btn btn-block btn-primary">Login</button>
+              <button class="btn btn-block btn-primary" @click="loginPressed">Login</button>
             </div>
           </div>
         </form>
@@ -44,9 +48,27 @@
 </template>
 
 <script>
-  export default {
-    name: 'login'
+import UserStore from '@/stores/UserStore.js'
+export default {
+  name: 'login',
+  data () {
+    return {
+      email: null,
+      password: null,
+      error: null
+    }
+  },
+  methods: {
+    loginPressed () {
+      UserStore.login(this.email, this.password)
+        .then()
+        .catch((errText) => {
+          this.error = errText
+        })
+
+    }
   }
+}
 </script>
 
 <style scoped>
