@@ -60,19 +60,20 @@ export default {
   },
   methods: {
     loginPressed () {
-
       if (this.email === null || this.email === '') {
         this.error = 'an email must be supplied'
       } else if (this.password === null) {
         this.error = 'a password must be supplied'
       } else {
         UserStore.login(this.email, this.password)
-          .then()
+          .then(() => {
+            this.$router
+              .push({name: 'home'})
+          })
           .catch((errText) => {
             this.error = errText
           })
       }
-
     }
   }
 }
