@@ -8,6 +8,7 @@
             Pisspricer
           </router-link>
         </li>
+
         <li class="nav-item">
             <input class="form-control mt-2 input-outline shadow-none"
                    type="text"
@@ -17,7 +18,12 @@
                    @keyup="getPreview($event)"
                    @keyup.enter="searchClicked">
         </li>
-        <li v-if="userStore.loggedIn">logged in</li>
+
+        <li class="text-right float-right" v-if="userStore.loggedIn">
+          <router-link to="logout">
+            Log Out
+          </router-link>
+        </li>
       </ul>
   </nav>
     <div class="mx-auto" id="suggestions" v-if="items !== null" v-click-outside="hideWindow">
