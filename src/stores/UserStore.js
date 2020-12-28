@@ -1,10 +1,11 @@
 import axios from 'axios'
 
 export default {
-  name: 'locationStore',
+  name: 'userStore',
   data: {
     userId: null,
-    authToken: null
+    authToken: null,
+    loggedIn: false
   },
   login (email, password) {
     return new Promise((resolve, reject) => {
@@ -16,6 +17,7 @@ export default {
         .then((res) => {
           this.userId = res.data.userId
           this.authToken = res.data.authToken
+          this.loggedIn = true
           resolve()
         })
         .catch((err) => {
@@ -24,7 +26,7 @@ export default {
     })
   },
   isLoggedIn () {
-    return (this.authToken != null)
+    return this.loggedIn
   },
   getUserInfo (userId) {
     return new Promise((resolve, reject) => {
@@ -45,6 +47,7 @@ export default {
     })
   },
   logout () {
+    this.loggedIn = false
     this.userId = null
     this.authToken = null
   },
