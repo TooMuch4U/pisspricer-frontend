@@ -17,6 +17,7 @@
                    @keyup="getPreview($event)"
                    @keyup.enter="searchClicked">
         </li>
+        <li v-if="userStore.loggedIn">logged in</li>
       </ul>
   </nav>
     <div class="mx-auto" id="suggestions" v-if="items !== null" v-click-outside="hideWindow">
@@ -44,6 +45,7 @@
 
 <script>
 import {eventBus} from '@/main.js'
+import UserStore from '@/stores/UserStore.js'
 export default {
   data () {
     return {
@@ -52,7 +54,8 @@ export default {
       itemsCount: 0,
       itemsTotalCount: 0,
       itemLimit: 5,
-      hide: false
+      hide: false,
+      userStore: UserStore
     }
   },
   methods: {
@@ -107,6 +110,9 @@ export default {
         // Don't get any items, search term not long enough
         this.items = null
       }
+    },
+    isLoggedIn () {
+      return UserStore.isLoggedIn()
     }
   },
   name: 'HeaderNav'
