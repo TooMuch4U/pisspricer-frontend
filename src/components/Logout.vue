@@ -65,6 +65,8 @@ export default {
     logout () {
       this.name = null
       UserStore.logout()
+      this.$router
+        .push({name: 'login'})
     }
   }
 }
