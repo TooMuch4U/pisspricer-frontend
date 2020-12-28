@@ -24,6 +24,40 @@ export default {
     })
   },
   isLoggedIn () {
-    return (this.authToken !== null)
+    return (this.authToken != null)
+  },
+  getUserInfo (userId) {
+    return new Promise((resolve, reject) => {
+      let header = {
+        'X-Authorization': this.authToken
+      }
+
+      axios.get(`${process.env.API_URL}/users/${userId}`, {headers: header})
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.logout()
+          }
+          reject(err)
+        })
+    })
+  },
+  logout () {
+    this.userId = null
+    this.authToken = null
+  },
+  getCurUserInfo () {
+    return new Promise((resolve, reject) => {
+      this.getUserInfo(this.userId)
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((err) => {
+          this.logout()
+          reject(err)
+        })
+    })
   }
 }
