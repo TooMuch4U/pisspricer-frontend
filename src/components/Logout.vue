@@ -20,7 +20,7 @@
           {{ error }}
         </div>
 
-        <div v-if="name !== null">
+        <div v-if="userStore.loggedIn">
           currently logged in as {{name}}
           <button class="btn btn-primary" @click="logout">Logout</button>
         </div>
@@ -43,7 +43,8 @@ export default {
   data () {
     return {
       error: null,
-      name: null
+      name: null,
+      userStore: UserStore
     }
   },
   created () {
