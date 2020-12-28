@@ -24,7 +24,7 @@
         </ul>
       </div>
       <span class="text-right order-last w-50">
-        <router-link to="logout" v-if="userStore.loggedIn">
+        <router-link to="logout" v-if="userStore.data.loggedIn">
           Log Out
         </router-link>
       </span>

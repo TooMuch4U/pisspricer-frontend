@@ -1,11 +1,13 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
+const COOKIE_EXPIRE = 365
 
 export default {
   name: 'userStore',
   data: {
     userId: null,
     authToken: null,
-    loggedIn: false
+    loggedIn: (typeof Cookies.get('authToken')) !== 'undefined'
   },
   login (email, password) {
     return new Promise((resolve, reject) => {
@@ -15,9 +17,13 @@ export default {
       }
       axios.post(`${process.env.API_URL}/users/login`, reqBody)
         .then((res) => {
-          this.userId = res.data.userId
-          this.authToken = res.data.authToken
+          // Success
           this.loggedIn = true
+
+          // Set cookies
+          Cookies.set('userId', res.data.userId, { expires: COOKIE_EXPIRE })
+          Cookies.set('authToken', res.data.authToken, { expires: COOKIE_EXPIRE })
+          console.log((typeof Cookies.get('authToken')) !== 'undefined')
           resolve()
         })
         .catch((err) => {
@@ -31,7 +37,7 @@ export default {
   getUserInfo (userId) {
     return new Promise((resolve, reject) => {
       let header = {
-        'X-Authorization': this.authToken
+        'X-Authorization': Cookies.get('authToken')
       }
 
       axios.get(`${process.env.API_URL}/users/${userId}`, {headers: header})
@@ -47,13 +53,13 @@ export default {
     })
   },
   logout () {
+    Cookies.remove('userId')
+    Cookies.remove('authToken')
     this.loggedIn = false
-    this.userId = null
-    this.authToken = null
   },
   getCurUserInfo () {
     return new Promise((resolve, reject) => {
-      this.getUserInfo(this.userId)
+      this.getUserInfo(Cookies.get('userId'))
         .then((res) => {
           resolve(res)
         })
