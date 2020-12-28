@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HeaderNav></HeaderNav>
+    <HeaderNav :key="userStore.loggedIn"></HeaderNav>
     <router-view/>
     <Footer/>
   </div>
@@ -9,10 +9,16 @@
 <script>
 import HeaderNav from '@/components/HeaderNav'
 import Footer from '@/components/Footer'
+import UserStore from '@/stores/UserStore'
 export default {
   components: {
     HeaderNav,
     Footer
+  },
+  data () {
+    return {
+      userStore: UserStore
+    }
   },
   name: 'App'
 }
