@@ -9,16 +9,10 @@
 <script>
 import HeaderNav from '@/components/HeaderNav'
 import Footer from '@/components/Footer'
-import UserStore from '@/stores/UserStore'
 export default {
   components: {
     HeaderNav,
     Footer
-  },
-  data () {
-    return {
-      userStore: UserStore
-    }
   },
   name: 'App'
 }
