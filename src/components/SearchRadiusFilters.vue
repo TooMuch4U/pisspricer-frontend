@@ -29,13 +29,10 @@
 
 <script>
 import {eventBus} from '@/main.js'
-import LocationStore from '@/stores/LocationStore.js'
 export default {
   name: 'SearchRadiusFilters',
   data () {
     return {
-      radius: '50',
-      mode: 'all',
       max: 50,
       min: 1,
       loading: 0
@@ -57,6 +54,34 @@ export default {
       this.nearMeClicked()
     }
   },
+  computed: {
+    lat () {
+      return this.$store.state.location.lat
+    },
+    lng () {
+      return this.$store.state.location.lng
+    },
+    radius: {
+      set (radius) {
+        this.$store.commit('radius', radius)
+      },
+      get () {
+        return this.$store.state.location.radius
+      }
+    },
+    mode: {
+      set (mode) {
+        if (mode === 'all') {
+          this.$store.commit('modeAll')
+        } else {
+          this.$store.commit('modeNear')
+        }
+      },
+      get () {
+        return this.$store.state.location.mode
+      }
+    }
+  },
   methods: {
     allClicked () {
       this.mode = 'all'
@@ -73,8 +98,8 @@ export default {
     nearMeClicked () {
       this.mode = 'near'
       this.loading = 1
-      if (LocationStore.data.lat === null) {
-        LocationStore.getLocation()
+      if (this.lat === null) {
+        this.$store.dispatch('getLocation')
           .then((loc) => {
             if (loc.lat !== null) {
               this.$emit('updateMode', this.mode)
