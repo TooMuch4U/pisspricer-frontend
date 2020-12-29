@@ -69,8 +69,15 @@ let actions = {
   }
 }
 
+let getters = {
+  loggedIn: state => {
+    state.loggedIn
+  }
+}
+
 export default {
   state,
   mutations,
-  actions
+  actions,
+  getters
 }
