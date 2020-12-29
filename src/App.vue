@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HeaderNav :key="userStore.data.loggedIn"></HeaderNav>
+    <HeaderNav></HeaderNav>
     <router-view/>
     <Footer/>
   </div>
