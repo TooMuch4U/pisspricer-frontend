@@ -71,8 +71,18 @@ let actions = {
   }
 }
 
+let getters = {
+  lat: state => {
+    return state.lat
+  },
+  lng: state => {
+    return state.lng
+  }
+}
+
 export default {
   state,
   mutations,
-  actions
+  actions,
+  getters
 }
