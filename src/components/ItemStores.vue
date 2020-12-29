@@ -64,7 +64,7 @@ import Item from '@/components/Item'
 import Pagination from '@/components/Pagination'
 import SearchRadiusFilters from '@/components/SearchRadiusFilters'
 import {eventBus} from '@/main.js'
-import LocationStore from '@/stores/LocationStore.js'
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -76,11 +76,13 @@ export default {
       slug: null,
       storeData: null,
       itemData: null,
-      order: 'price-asc',
-      lat: null,
-      lng: null,
-      radiusMode: 'all',
-      filterRadius: 50
+      order: 'price-asc'
+    }
+  },
+  watch: {
+    // Update items when search params update
+    parameters () {
+      this.getStores()
     }
   },
   components: {
@@ -106,6 +108,27 @@ export default {
     this.loadPage()
   },
   computed: {
+    ...mapGetters(['lat', 'lng']),
+    mode: {
+      set (mode) {
+        if (mode === 'all') {
+          this.$store.commit('modeAll')
+        } else {
+          this.$store.commit('modeNear')
+        }
+      },
+      get () {
+        return this.$store.state.location.mode
+      }
+    },
+    radius: {
+      set (radius) {
+        this.$store.commit('radius', radius)
+      },
+      get () {
+        return this.$store.state.location.radius
+      }
+    },
     pages () {
       if (this.isLoading || this.totalCount <= this.itemsPerPage) {
         return [1]
@@ -113,37 +136,35 @@ export default {
       return [
         ...Array(Math.ceil(this.totalCount / this.itemsPerPage)).keys()
       ].map(e => e + 1)
-    }
-  },
-  methods: {
-    loadPage () {
-      let that = this
-      LocationStore.getLocation(true).then((_) => { that.getStores() })
-      this.setRadiusParams()
-      this.getStores()
     },
-    getStores () {
+    parameters () {
       let paramObj = {
         mode: 'slug',
         count: this.itemsPerPage,
         index: ((this.currentPage - 1) * this.itemsPerPage)
       }
-      const lat = LocationStore.data.lat
-      const lng = LocationStore.data.lng
 
-      if ((this.filterRadius !== null || lat !== null || lng !== null) && this.radiusMode === 'near') {
-        paramObj.r = this.filterRadius
-      } else {
-        eventBus.$emit('searchRadiusUpdateMode2', 'all')
+      if ((this.radius !== null || this.lat !== null || this.lng !== null) && this.mode === 'near') {
+        paramObj.r = this.radius
       }
 
       paramObj.order = this.order
-      paramObj.lat = lat
-      paramObj.lng = lng
-
+      paramObj.lat = this.lat
+      paramObj.lng = this.lng
+      return paramObj
+    }
+  },
+  methods: {
+    loadPage () {
+      let that = this
+      this.$store.dispatch('getLocation', true).then((_) => { that.getStores() })
+      this.setRadiusParams()
+      this.getStores()
+    },
+    getStores () {
       this.$http.get(`${process.env.API_URL}/items/${this.slug}/stores`,
         {
-          params: paramObj
+          params: this.parameters
         })
         .then((res) => {
           this.storeData = res.data.items
@@ -153,33 +174,25 @@ export default {
         })
     },
     setRadiusParams () {
-      let that = this
       if (typeof this.$route.query.r !== 'undefined') {
-        that.radiusMode = 'near'
-        that.filterRadius = parseInt(that.$route.query.r)
-        LocationStore.getLocation()
+        this.mode = 'near'
+        this.radius = parseInt(this.$route.query.r)
+        this.$store.dispatch('getLocation')
           .then((loc) => {
-            that.getStores()
+            this.getStores()
           }).catch((err) => {
             console.log(err)
           })
       } else {
-        that.radiusMode = 'all'
+        this.mode = 'all'
       }
     },
     orderUpdated () {
       if (this.lat === null || this.lng === null) {
-        this.$getLocation()
-          .then(coordinates => {
-            this.lat = coordinates.lat
-            this.lng = coordinates.lng
-            this.getStores()
-          }).catch(() => {
+        this.$store.dispatch('getLocation')
+          .catch(() => {
             this.order = 'price-asc'
-            this.getStores()
           })
-      } else {
-        this.getStores()
       }
     },
     getDaysAgoStr (dateStr) {
