@@ -23,7 +23,7 @@
               <div class="col-6 px-0">
                 <div class="float-right">
                   <label for="sortby">Sort by: </label>
-                  <select id="sortby" v-model="order" class="float-right no-outline pointer-cursor" @change="orderUpdated">
+                  <select id="sortby" v-model="order" class="float-right no-outline pointer-cursor bg-white" @change="orderUpdated">
                     <option value="dist-asc">Distance low</option>
                     <option value="dist-desc">Distance high</option>
                     <option value="price-desc">Price high</option>

@@ -25,7 +25,7 @@
               <div class="col-12 col-sm-7">
                 <div class="float-sm-right">
                   <label for="sortby">Sort by: </label>
-                  <select id="sortby" v-model="order" class="float-sm-right no-outline pointer-cursor">
+                  <select id="sortby" v-model="order" class="float-sm-right no-outline pointer-cursor bg-white">
                     <option value="best-match" selected="selected">Relevance</option>
                     <option value="price-desc">Price high</option>
                     <option value="price-asc">Price low</option>
