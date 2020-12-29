@@ -5,8 +5,7 @@
         <div class="col-md-3 col-12 text-left">
 
           <CategoryFilters @update="(catFilters) => {this.filterCats = catFilters}"/>
-          <SearchRadiusFilters @updateMode="(newMode) => {this.radiusMode = newMode}"
-                               @updateRadius="(rad, lati, long) => {this.filterRadius = rad; this.lat = lati; this.lng = long}"/>
+          <SearchRadiusFilters/>
 
         </div>
         <div class="col-0 d-none d-md-block filter-div"></div>
@@ -26,7 +25,7 @@
               <div class="col-12 col-sm-7">
                 <div class="float-sm-right">
                   <label for="sortby">Sort by: </label>
-                  <select id="sortby" v-model="order" class="float-sm-right no-outline pointer-cursor" @change="orderChange">
+                  <select id="sortby" v-model="order" class="float-sm-right no-outline pointer-cursor">
                     <option value="best-match" selected="selected">Relevance</option>
                     <option value="price-desc">Price high</option>
                     <option value="price-asc">Price low</option>
@@ -69,7 +68,6 @@ import Pagination from '@/components/Pagination'
 import RegionFilters from '@/components/RegionFilters'
 import CategoryFilters from '@/components/CategoryFilters'
 import SearchRadiusFilters from '@/components/SearchRadiusFilters'
-import LocationStore from '../stores/LocationStore'
 
 export default {
   data () {
@@ -84,11 +82,7 @@ export default {
       itemsPerPage: 24,
       order: 'best-match',
       filterCats: [],
-      filterRegion: null,
-      radiusMode: 'all',
-      filterRadius: 50,
-      lat: null,
-      lng: null
+      filterRegion: null
     }
   },
   components: {
@@ -106,9 +100,12 @@ export default {
       this.currentPage = page
       this.scrollToTop()
     })
-    eventBus.$on('remoteUpdateItems', () => {
+  },
+  watch: {
+    // Update items when search params update
+    searchParams () {
       this.getItems()
-    })
+    }
   },
   computed: {
     pages () {
@@ -118,15 +115,28 @@ export default {
       return [
         ...Array(Math.ceil(this.totalCount / this.itemsPerPage)).keys()
       ].map(e => e + 1)
-    }
-  },
-  methods: {
-    getItems: function () {
-      this.searchTerm = this.$route.query.s
-
+    },
+    lat () {
+      return this.$store.state.location.lat
+    },
+    lng () {
+      return this.$store.state.location.lng
+    },
+    mode () {
+      return this.$store.state.location.mode
+    },
+    radius: {
+      set (radius) {
+        this.$store.commit('radius', radius)
+      },
+      get () {
+        return this.$store.state.location.radius
+      }
+    },
+    searchParams () {
       let searchParams = {
         count: this.itemsPerPage,
-        search: this.searchTerm,
+        search: this.$route.query.s,
         index: ((this.currentPage - 1) * this.itemsPerPage),
         order: this.order,
         catId: this.filterCats}
@@ -135,16 +145,17 @@ export default {
         searchParams.regionId = this.filterRegion
       }
 
-      let lng = LocationStore.data.lng
-      let lat = LocationStore.data.lat
-
-      if (this.filterRadius !== null && lng !== null && lat !== null && this.radiusMode === 'near') {
-        searchParams.r = this.filterRadius
-        searchParams.lng = lng
-        searchParams.lat = lat
-      } else {
-        eventBus.$emit('searchRadiusUpdateMode3', 'all')
+      if (this.radius !== null && this.lng !== null && this.lat !== null && this.mode === 'near') {
+        searchParams.r = this.radius
+        searchParams.lng = this.lng
+        searchParams.lat = this.lat
       }
+      return searchParams
+    }
+  },
+  methods: {
+    getItems: function () {
+      let searchParams = this.searchParams
 
       this.$http.get(process.env.API_URL + '/items',
         { params: searchParams })
@@ -160,9 +171,8 @@ export default {
     },
     setRadiusParams () {
       if ('r' in this.$route.query) {
-        this.radiusMode = 'near'
-        this.filterRadius = parseInt(this.$route.query.r)
-        eventBus.$emit('getLatLng')
+        this.mode = 'near'
+        this.radius = parseInt(this.$route.query.r)
       }
     },
     getLinkParams (item) {
@@ -174,9 +184,6 @@ export default {
     },
     imageUrl: function (sku) {
       return process.env.VUE_APP_STATIC_URL + 'items/' + sku + '.jpeg'
-    },
-    orderChange: function () {
-      this.getItems()
     },
     scrollToTop () {
       window.scrollTo(0, 0)
