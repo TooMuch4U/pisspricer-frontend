@@ -3,7 +3,8 @@ import VueGeolocation from 'vue-browser-geolocation/src'
 let state = {
   lat: null,
   lng: null,
-  radius: 50
+  radius: 50,
+  mode: 'all'
 }
 
 let mutations = {
@@ -15,6 +16,12 @@ let mutations = {
   },
   radius (state, newRadius) {
     state.radius = newRadius
+  },
+  modeAll (state) {
+    state.mode = 'all'
+  },
+  modeNear (state) {
+    state.mode = 'near'
   }
 }
 
