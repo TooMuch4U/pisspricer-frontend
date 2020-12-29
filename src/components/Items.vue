@@ -68,6 +68,7 @@ import Pagination from '@/components/Pagination'
 import RegionFilters from '@/components/RegionFilters'
 import CategoryFilters from '@/components/CategoryFilters'
 import SearchRadiusFilters from '@/components/SearchRadiusFilters'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -108,6 +109,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['lat', 'lng']),
     pages () {
       if (this.isLoading || this.totalCount <= this.itemsPerPage) {
         return [1]
@@ -116,21 +118,24 @@ export default {
         ...Array(Math.ceil(this.totalCount / this.itemsPerPage)).keys()
       ].map(e => e + 1)
     },
-    lat () {
-      return this.$store.state.location.lat
-    },
-    lng () {
-      return this.$store.state.location.lng
-    },
-    mode () {
-      return this.$store.state.location.mode
-    },
     radius: {
       set (radius) {
         this.$store.commit('radius', radius)
       },
       get () {
         return this.$store.state.location.radius
+      }
+    },
+    mode: {
+      set (mode) {
+        if (mode === 'all') {
+          this.$store.commit('modeAll')
+        } else {
+          this.$store.commit('modeNear')
+        }
+      },
+      get () {
+        return this.$store.state.location.mode
       }
     },
     searchParams () {
