@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import UserStore from '@/stores/UserStore.js'
 export default {
   name: 'login',
   data () {
@@ -65,7 +64,7 @@ export default {
       } else if (this.password === null) {
         this.error = 'a password must be supplied'
       } else {
-        UserStore.login(this.email, this.password)
+        this.$store.dispatch('login', {email: this.email, password: this.password})
           .then(() => {
             this.$router
               .push({name: 'home'})

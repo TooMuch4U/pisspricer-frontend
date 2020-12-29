@@ -24,7 +24,7 @@
         </ul>
       </div>
       <span class="text-right order-last w-50">
-        <router-link to="logout" v-if="userStore.data.loggedIn">
+        <router-link to="logout" v-if="loggedIn">
           Log Out
         </router-link>
       </span>
@@ -57,7 +57,6 @@
 
 <script>
 import {eventBus} from '@/main.js'
-import UserStore from '@/stores/UserStore.js'
 export default {
   data () {
     return {
@@ -66,8 +65,12 @@ export default {
       itemsCount: 0,
       itemsTotalCount: 0,
       itemLimit: 5,
-      hide: false,
-      userStore: UserStore
+      hide: false
+    }
+  },
+  computed: {
+    loggedIn () {
+      return this.$store.state.user.loggedIn
     }
   },
   methods: {
@@ -122,9 +125,6 @@ export default {
         // Don't get any items, search term not long enough
         this.items = null
       }
-    },
-    isLoggedIn () {
-      return UserStore.isLoggedIn()
     }
   },
   name: 'HeaderNav'

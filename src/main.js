@@ -7,10 +7,15 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueGeolocation from 'vue-browser-geolocation'
 import './assets/css/styles.css'
+import Vuex from 'vuex'
+import store from './store'
 
 Vue.use(VueGeolocation)
 Vue.use(VueAxios, axios)
+Vue.use(Vuex)
 Vue.config.productionTip = false
+
+// Create custom directive
 Vue.directive('click-outside', {
   bind: function (el, binding, vnode) {
     el.clickOutsideEvent = function (event) {
@@ -32,6 +37,7 @@ export const eventBus = new Vue()
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>'

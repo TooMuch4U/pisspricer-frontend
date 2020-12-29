@@ -18,12 +18,11 @@ export default {
       axios.post(`${process.env.API_URL}/users/login`, reqBody)
         .then((res) => {
           // Success
-          this.loggedIn = true
+          this.data.loggedIn = true
 
           // Set cookies
           Cookies.set('userId', res.data.userId, { expires: COOKIE_EXPIRE })
           Cookies.set('authToken', res.data.authToken, { expires: COOKIE_EXPIRE })
-          console.log((typeof Cookies.get('authToken')) !== 'undefined')
           resolve()
         })
         .catch((err) => {
@@ -32,7 +31,7 @@ export default {
     })
   },
   isLoggedIn () {
-    return this.loggedIn
+    return this.data.loggedIn
   },
   getUserInfo (userId) {
     return new Promise((resolve, reject) => {
@@ -55,7 +54,8 @@ export default {
   logout () {
     Cookies.remove('userId')
     Cookies.remove('authToken')
-    this.loggedIn = false
+    this.data.loggedIn = false
+    // Todo send logout
   },
   getCurUserInfo () {
     return new Promise((resolve, reject) => {

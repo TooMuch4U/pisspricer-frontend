@@ -20,7 +20,7 @@
           {{ error }}
         </div>
 
-        <div v-if="userStore.loggedIn">
+        <div v-if="loggedIn">
           currently logged in as {{name}}
           <button class="btn btn-primary" @click="logout">Logout</button>
         </div>
@@ -37,19 +37,22 @@
 </template>
 
 <script>
-import UserStore from '@/stores/UserStore.js'
 export default {
   name: 'Logout',
   data () {
     return {
       error: null,
-      name: null,
-      userStore: UserStore
+      name: null
+    }
+  },
+  computed: {
+    loggedIn () {
+      return this.$store.state.user.loggedIn
     }
   },
   created () {
-    if (this.isLoggedIn()) {
-      UserStore.getCurUserInfo()
+    if (this.$store.state.user.loggedIn) {
+      this.$store.dispatch('getCurUserInfo')
         .then((info) => {
           this.name = info.firstname
         })
@@ -59,12 +62,9 @@ export default {
     }
   },
   methods: {
-    isLoggedIn () {
-      return UserStore.isLoggedIn()
-    },
     logout () {
       this.name = null
-      UserStore.logout()
+      this.$store.dispatch('logout')
       this.$router
         .push({name: 'login'})
     }
