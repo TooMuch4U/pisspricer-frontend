@@ -52,6 +52,7 @@ let actions = {
                     reject(err)
                   })
               } else {
+                commit('modeAll')
                 reject(new Error('Location not available'))
               }
             })
