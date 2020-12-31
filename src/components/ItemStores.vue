@@ -5,8 +5,7 @@
       <div class="row">
         <div class="col-md-1 d-none d-md-block"/>
         <div class="col-md-3 col-12 text-left text-left filter-div">
-          <SearchRadiusFilters @updateMode="(newMode) => {this.radiusMode = newMode}"
-                               @updateRadius="(rad, lati, long) => {this.filterRadius = rad; this.lat = lati; this.lng = long}"/>
+          <SearchRadiusFilters/>
         </div>
 
         <div class="col-12 col-md-7">
