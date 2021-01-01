@@ -6,6 +6,7 @@ import ItemStores from '@/components/ItemStores'
 import Login from '@/components/Login'
 import Logout from '@/components/Logout'
 import Register from '@/components/Register'
+import VerifyUser from '@/components/VerifyUser'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/register/:userId/verify/:code',
+      name: 'verify',
+      component: VerifyUser
     },
     {
       path: '/items',
