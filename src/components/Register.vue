@@ -19,6 +19,9 @@
         <div v-if="error !== null" class="alert alert-danger" role="alert">
           {{ error }}
         </div>
+        <div v-if="success" class="alert alert-success" role="alert">
+          {{ success }}
+        </div>
 
         <form v-on:submit.prevent>
           <div class="form-group text-left">
@@ -96,7 +99,7 @@ export default {
       }
       this.$store.dispatch('register', reqBody)
         .then(() => {
-          this.success = `A confirmation email was sent to ${this.email}. Click the link to verify your account.`
+          this.success = `Success! A confirmation email was sent to ${this.email}.`
         })
         .catch((err) => {
           this.error = err.response.statusText
