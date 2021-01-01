@@ -32,7 +32,7 @@
 
           <div class="form-row">
             <div class="form-group col-6">
-              <button type="button" class="btn btn-block btn-light">Register</button>
+              <button type="button" class="btn btn-block btn-light" @click="gotoRegister">Register</button>
             </div>
             <div class="form-group col-6">
               <button class="btn btn-block btn-primary" @click="loginPressed">Login</button>
@@ -73,6 +73,10 @@ export default {
             this.error = err.response.statusText
           })
       }
+    },
+    gotoRegister () {
+      this.$router
+        .push({name: 'register'})
     }
   }
 }
