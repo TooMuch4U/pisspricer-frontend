@@ -69,8 +69,8 @@ export default {
             this.$router
               .push({name: 'home'})
           })
-          .catch((errText) => {
-            this.error = errText
+          .catch((err) => {
+            this.error = err.response.statusText
           })
       }
     }
