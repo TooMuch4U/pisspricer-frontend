@@ -65,6 +65,20 @@ let actions = {
     Cookies.remove('authToken')
     commit('setLoggedIn', false)
     // Todo send logout to api
+  },
+  register ({commit}, reqBody) {
+    return new Promise((resolve, reject) => {
+      let header = {
+        'X-Authorization': Cookies.get('authToken')
+      }
+      axios.post(`${process.env.API_URL}/users/register`, reqBody, {headers: header})
+        .then((res) => {
+          resolve()
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
   }
 }
 
