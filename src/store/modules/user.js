@@ -68,12 +68,20 @@ let actions = {
   },
   register ({commit}, reqBody) {
     return new Promise((resolve, reject) => {
-      let header = {
-        'X-Authorization': Cookies.get('authToken')
-      }
-      axios.post(`${process.env.API_URL}/users/register`, reqBody, {headers: header})
+      axios.post(`${process.env.API_URL}/users/register`, reqBody)
         .then((res) => {
           resolve()
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  },
+  verifyUser ({commit}, {userId, code}) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${process.env.API_URL}/users/${userId}/verify/${code}`)
+        .then((res) => {
+          resolve(res)
         })
         .catch((err) => {
           reject(err)
