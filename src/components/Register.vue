@@ -25,6 +25,14 @@
             <label for="email">Email address</label>
             <input v-model="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="email">
           </div>
+          <div class="form-group text-left">
+            <label for="email">Firstname</label>
+            <input v-model="firstname" type="text" class="form-control" id="firstname" placeholder="firstname">
+          </div>
+          <div class="form-group text-left">
+            <label for="email">Lastname</label>
+            <input v-model="lastname" type="text" class="form-control" id="lastname" placeholder="lastname">
+          </div>
 
           <div class="form-group text-left">
             <label for="password">Password</label>
@@ -38,10 +46,10 @@
 
           <div class="form-row">
             <div class="form-group col-6">
-              <button type="button" class="btn btn-block btn-light">Login</button>
+              <button type="button" class="btn btn-block btn-light" @click="gotoLogin">Login</button>
             </div>
             <div class="form-group col-6">
-              <button class="btn btn-block btn-primary" @click="loginPressed">Register</button>
+              <button class="btn btn-block btn-primary" @click="registerPressed">Register</button>
             </div>
           </div>
         </form>
@@ -61,9 +69,44 @@ export default {
       email: null,
       password: null,
       passwordConfirm: null,
-      error: null
+      lastname: null,
+      firstname: null,
+      error: null,
+      success: null
     }
   },
+  methods: {
+    registerPressed () {
+      if (this.email === null ||
+          this.password === null ||
+          this.firstname === null ||
+          this.lastname === null) {
+        this.error = 'All fields must be filled'
+        return
+      }
+      if (this.password !== this.passwordConfirm) {
+        this.error = 'Passwords must match'
+        return
+      }
+      const reqBody = {
+        email: this.email,
+        password: this.password,
+        firstname: this.firstname,
+        lastname: this.lastname
+      }
+      this.$store.dispatch('register', reqBody)
+        .then(() => {
+          this.success = `A confirmation email was sent to ${this.email}. Click the link to verify your account.`
+        })
+        .catch((err) => {
+          this.error = err.response.statusText
+        })
+    },
+    gotoLogin () {
+      this.$router.push({name: 'login'})
+    }
+
+  }
 }
 </script>
 
