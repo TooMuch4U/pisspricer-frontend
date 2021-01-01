@@ -5,6 +5,7 @@ import Items from '@/components/Items'
 import ItemStores from '@/components/ItemStores'
 import Login from '@/components/Login'
 import Logout from '@/components/Logout'
+import Register from '@/components/Register'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/logout',
       name: 'logout',
       component: Logout
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     {
       path: '/items',
