@@ -15,7 +15,6 @@ let mutations = {
 let actions = {
   login ({commit}, reqBody) {
     return new Promise((resolve, reject) => {
-      console.log(reqBody)
       axios.post(`${process.env.API_URL}/users/login`, reqBody)
         .then((res) => {
           // Set cookies
@@ -71,7 +70,7 @@ let actions = {
 
 let getters = {
   loggedIn: state => {
-    state.loggedIn
+    return state.loggedIn
   }
 }
 
