@@ -16,14 +16,28 @@
 
       <div class="col-lg-4 col-md-6 col-sm-8 col-12">
 
-        <div v-if="error !== null" class="alert alert-danger" role="alert">
-          {{ error }}
-        </div>
         <div v-if="success" class="alert alert-success" role="alert">
-          {{ success }}
+          Account successfully verified! <router-link to="login">Login</router-link>
         </div>
 
+        <div v-else-if="error !== null">
+          <div class="alert alert-danger" role="alert">
+            {{ error }}
+          </div>
 
+          <div v-if="error.includes('already')">
+            Try <router-link to="login">login</router-link> instead.
+          </div>
+
+          <div v-else>
+            Resend a new code <router-link to="register">here</router-link> instead
+          </div>
+
+        </div>
+
+        <div v-else>
+          Verifying your account... <img class="loading-img" src="@/assets/loading.gif">
+        </div>
 
       </div>
 
@@ -40,10 +54,31 @@ export default {
       error: null,
       success: null
     }
+  },
+  created () {
+    this.verifyAccount()
+  },
+  methods: {
+    verifyAccount () {
+      const userId = this.$route.params.userId
+      const code = this.$route.params.code
+      this.$store.dispatch('verifyUser', {userId, code})
+        .then((res) => {
+          this.success = true
+        })
+        .catch((err) => {
+          this.error = err.response.statusText
+        })
+    }
   }
 }
 </script>
 
 <style scoped>
-
+#verify {
+  min-height: 400px;
+}
+.loading-img {
+  width: 15px;
+}
 </style>
