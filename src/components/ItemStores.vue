@@ -175,7 +175,9 @@ export default {
         })
     },
     setRadiusParams () {
-      if (typeof this.$route.query.r !== 'undefined') {
+      if (this.radius !== null) {
+        this.mode = 'near'
+      } else if (typeof this.$route.query.r !== 'undefined') {
         this.mode = 'near'
         this.radius = parseInt(this.$route.query.r)
         this.$store.dispatch('getLocation')

@@ -177,7 +177,10 @@ export default {
         })
     },
     setRadiusParams () {
-      if ('r' in this.$route.query) {
+      if (this.radius !== null) {
+        console.log(this.radius)
+        this.mode = 'near'
+      } else if ('r' in this.$route.query) {
         this.mode = 'near'
         this.radius = parseInt(this.$route.query.r)
       }
