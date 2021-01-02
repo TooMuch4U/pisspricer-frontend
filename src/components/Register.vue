@@ -16,14 +16,14 @@
 
       <div class="col-lg-4 col-md-6 col-sm-8 col-12">
 
-        <div v-if="error !== null" class="alert alert-danger" role="alert">
-          {{ error }}
-        </div>
         <div v-if="success" class="alert alert-success" role="alert">
           {{ success }}
         </div>
+        <div v-else-if="error !== null" class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
 
-        <form v-on:submit.prevent>
+        <form v-on:submit.prevent v-if="!success">
           <div class="form-group text-left">
             <label for="email">Email address</label>
             <input v-model="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="email">
