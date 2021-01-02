@@ -66,9 +66,9 @@ let actions = {
     commit('setLoggedIn', false)
     // Todo send logout to api
   },
-  register ({commit}, reqBody) {
+  register ({commit}, {referer, reqBody}) {
     return new Promise((resolve, reject) => {
-      axios.post(`${process.env.API_URL}/users/register`, reqBody)
+      axios.post(`${process.env.API_URL}/users/register`, reqBody, {params: {referer}})
         .then((res) => {
           resolve()
         })
@@ -88,9 +88,9 @@ let actions = {
         })
     })
   },
-  resendVerify ({commit}, {email}) {
+  resendVerify ({commit}, {email, referer}) {
     return new Promise((resolve, reject) => {
-      axios.post(`${process.env.API_URL}/users/${email}/resend`)
+      axios.post(`${process.env.API_URL}/users/${email}/resend`, {}, {params: {referer}})
         .then((res) => {
           resolve(res)
         })
