@@ -24,9 +24,15 @@
         </ul>
       </div>
       <span class="text-right order-last w-50">
-        <router-link to="logout" v-if="loggedIn">
-          Log Out
+        <router-link :to="{name: 'logout'}" v-if="loggedIn">
+          logout
         </router-link>
+
+        <div v-else>
+          <router-link :to="{name: 'login'}">login</router-link>
+          /
+          <router-link :to="{name: 'register'}">register</router-link>
+        </div>
       </span>
 
     </nav>
