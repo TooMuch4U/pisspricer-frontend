@@ -19,6 +19,10 @@
         <div v-if="error !== null" class="alert alert-danger" role="alert">
           {{ error }}
         </div>
+        <div v-if="error && error.includes('not verified')">
+          Can't find you verification email? Resend it <router-link :to="{name: 'resend'}">here</router-link>
+          <br><br>
+        </div>
 
         <form v-on:submit.prevent>
           <div class="form-group text-left">
