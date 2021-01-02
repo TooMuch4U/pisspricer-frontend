@@ -7,6 +7,7 @@ import Login from '@/components/Login'
 import Logout from '@/components/Logout'
 import Register from '@/components/Register'
 import VerifyUser from '@/components/VerifyUser'
+import ResendCode from '@/components/ResendCode'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       path: '/register/:userId/verify/:code',
       name: 'verify',
       component: VerifyUser
+    },
+    {
+      path: '/register/resend',
+      name: 'resend',
+      component: ResendCode
     },
     {
       path: '/items',
