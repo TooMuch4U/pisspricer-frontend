@@ -120,6 +120,7 @@ export default {
     },
     radius: {
       set (radius) {
+        this.$route.query.r = radius
         this.$store.commit('radius', radius)
       },
       get () {
@@ -129,6 +130,7 @@ export default {
     mode: {
       set (mode) {
         if (mode === 'all') {
+          delete this.$route.query.r
           this.$store.commit('modeAll')
         } else {
           this.$store.commit('modeNear')
@@ -182,8 +184,8 @@ export default {
     },
     getLinkParams (item) {
       let params = { name: 'item', params: { slug: item.slug }, query: {} }
-      if (this.radiusMode === 'near') {
-        params.query.r = this.filterRadius
+      if (this.mode === 'near') {
+        params.query.r = this.radius
       }
       return params
     },

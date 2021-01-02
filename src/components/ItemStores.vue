@@ -111,6 +111,7 @@ export default {
     mode: {
       set (mode) {
         if (mode === 'all') {
+          delete this.$route.query.r
           this.$store.commit('modeAll')
         } else {
           this.$store.commit('modeNear')
@@ -122,6 +123,7 @@ export default {
     },
     radius: {
       set (radius) {
+        this.$route.query.r = radius
         this.$store.commit('radius', radius)
       },
       get () {
