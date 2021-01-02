@@ -63,7 +63,7 @@ export default {
         this.error = 'An email must be entered!'
         return
       }
-      this.$store.dispatch('resendVerify', {email: this.email})
+      this.$store.dispatch('resendVerify', {email: this.email, referer: location.origin})
         .then((res) => {
           this.success = `Success! A confirmation email was sent to ${this.email}.`
         })
