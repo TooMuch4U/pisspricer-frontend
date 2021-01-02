@@ -15,9 +15,11 @@
       <div class="col-lg-4 col-md-3 col-sm-2 d-none d-sm-block"/>
 
       <div class="col-lg-4 col-md-6 col-sm-8 col-12">
-
-        <div v-if="success" class="alert alert-success" role="alert">
-          {{ success }}
+        <div v-if="success">
+          <div class="alert alert-success" role="alert">
+            {{ success }}
+          </div>
+          Can't find the email? <router-link :to="{name: 'resend'}">Resend</router-link> a new code
         </div>
         <div v-else-if="error !== null" class="alert alert-danger" role="alert">
           {{ error }}
@@ -91,13 +93,18 @@ export default {
         this.error = 'Passwords must match'
         return
       }
+
       const reqBody = {
         email: this.email,
         password: this.password,
         firstname: this.firstname,
         lastname: this.lastname
       }
-      this.$store.dispatch('register', reqBody)
+      const payload = {
+        reqBody: reqBody,
+        referer: location.origin
+      }
+      this.$store.dispatch('register', payload)
         .then(() => {
           this.success = `Success! A confirmation email was sent to ${this.email}.`
         })
