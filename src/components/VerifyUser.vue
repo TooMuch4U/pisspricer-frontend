@@ -17,7 +17,7 @@
       <div class="col-lg-4 col-md-6 col-sm-8 col-12">
 
         <div v-if="success" class="alert alert-success" role="alert">
-          Account successfully verified! <router-link to="login">Login</router-link>
+          Account successfully verified! <router-link :to="{name: 'login'}">Login</router-link>
         </div>
 
         <div v-else-if="error !== null">
@@ -26,11 +26,11 @@
           </div>
 
           <div v-if="error.includes('already')">
-            Try <router-link to="login">login</router-link> instead.
+            Try <router-link :to="{name: 'login'}">login</router-link> instead.
           </div>
 
           <div v-else>
-            Resend a new code <router-link to="register">here</router-link> instead
+            Resend a new code <router-link :to="{name: 'resend'}">here</router-link> instead
           </div>
 
         </div>
