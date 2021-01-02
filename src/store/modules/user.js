@@ -87,6 +87,17 @@ let actions = {
           reject(err)
         })
     })
+  },
+  resendVerify ({commit}, {email}) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${process.env.API_URL}/users/${email}/resend`)
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
   }
 }
 
