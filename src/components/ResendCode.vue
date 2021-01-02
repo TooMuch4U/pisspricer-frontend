@@ -24,21 +24,21 @@
         </div>
 
 
-          <form v-on:submit.prevent>
-            <div class="form-group text-left">
-              <label for="email">Email address</label>
-              <input v-model="email" type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                     placeholder="email">
-              <div class="form-row">
-                <div class="form-group col-6">
-                  <button type="button" class="btn btn-block btn-light" @click="gotoLogin">Login</button>
-                </div>
-                <div class="form-group col-6">
-                  <button class="btn btn-block btn-primary" @click="sendVerification">Resend</button>
-                </div>
-              </div>
+        <form v-on:submit.prevent>
+          <div class="form-group text-left">
+            <label for="email">Email address</label>
+            <input v-model="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="email">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <button type="button" class="btn btn-block btn-light" @click="gotoLogin">Login</button>
             </div>
-          </form>
+            <div class="form-group col-6">
+              <button class="btn btn-block btn-primary" @click="sendVerification">Resend</button>
+            </div>
+          </div>
+        </form>
 
       </div>
 
@@ -61,6 +61,7 @@ export default {
     sendVerification () {
       if (!this.email) {
         this.error = 'An email must be entered!'
+        return
       }
       this.$store.dispatch('resendVerify', {email: this.email})
         .then((res) => {
