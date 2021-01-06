@@ -19,7 +19,7 @@
         <div v-if="error !== null" class="alert alert-danger" role="alert">
           {{ error }}
         </div>
-        <div v-if="success" class="alert alert-success" role="alert">
+        <div v-else-if="success" class="alert alert-success" role="alert">
           {{ success }}
         </div>
 
@@ -59,6 +59,8 @@ export default {
   },
   methods: {
     sendVerification () {
+      this.success = null
+      this.error = null
       if (!this.email) {
         this.error = 'An email must be entered!'
         return
@@ -66,6 +68,7 @@ export default {
       this.$store.dispatch('resendVerify', {email: this.email, referer: location.origin})
         .then((res) => {
           this.success = `Success! A confirmation email was sent to ${this.email}.`
+          this.error = null
         })
         .catch((err) => {
           this.error = err.response.statusText
