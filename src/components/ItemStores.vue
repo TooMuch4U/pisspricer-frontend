@@ -206,9 +206,7 @@ export default {
       if (hours < 1) {
         return 'in the last hour'
       } else if (days < 1) {
-        return 'today'
-      } else if (days < 2) {
-        return 'yesterday'
+        return 'in the last 24 hours'
       } else if (days < 7) {
         return parseInt(days) + ' days ago'
       } else if (days < 30) {
