@@ -1,4 +1,5 @@
 import VueGeolocation from 'vue-browser-geolocation/src'
+import { getField, updateField } from 'vuex-map-fields';
 
 let state = {
   lat: null,
@@ -8,6 +9,7 @@ let state = {
 }
 
 let mutations = {
+  updateField,
   lat (state, newLat) {
     state.lat = newLat
   },
@@ -79,6 +81,7 @@ let actions = {
 }
 
 let getters = {
+  getField,
   lat: state => {
     return state.lat
   },
