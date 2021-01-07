@@ -44,7 +44,10 @@
                 <p class="text-muted mb-0" v-if="store.distance === 0">Updated {{ getDaysAgoStr(store.dateChecked) }}</p>
                 <p class="text-muted mb-0" v-else>Updated {{ getDaysAgoStr(store.dateChecked) }}, {{ store.distance.toFixed(1) }}km</p>
               </td>
-              <td v-if="store.salePrice !== null"><s>${{ store.price }}</s><br/> ${{ store.salePrice }}</td>
+              <td v-if="store.salePrice !== null">
+                <s>${{ roundPrice(store.price) }}</s><br/>
+                ${{ roundPrice(store.salePrice) }}
+              </td>
               <td v-else>${{ store.price }}</td>
             </tr>
           </table>
@@ -223,6 +226,9 @@ export default {
     },
     scrollToTop () {
       window.scrollTo(0, 100)
+    },
+    roundPrice (num) {
+      return (Math.round(num * 100) / 100).toFixed(2)
     }
   },
   name: 'ItemStores'
