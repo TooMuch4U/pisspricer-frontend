@@ -17,6 +17,13 @@ let mutations = {
   radius (state, newRadius) {
     state.radius = newRadius
   },
+  mode (state, newMode) {
+    if (newMode === 'all') {
+      state.mode = 'all'
+    } else {
+      state.mode = 'near'
+    }
+  },
   modeAll (state) {
     state.mode = 'all'
   },
@@ -77,6 +84,9 @@ let getters = {
   },
   lng: state => {
     return state.lng
+  },
+  mode: state => {
+    return state.mode
   }
 }
 
