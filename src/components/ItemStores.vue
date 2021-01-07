@@ -44,7 +44,10 @@
                 <p class="text-muted mb-0" v-if="store.distance === 0">Updated {{ getDaysAgoStr(store.dateChecked) }}</p>
                 <p class="text-muted mb-0" v-else>Updated {{ getDaysAgoStr(store.dateChecked) }}, {{ store.distance.toFixed(1) }}km</p>
               </td>
-              <td v-if="store.salePrice !== null"><s>${{ store.price }}</s><br/> ${{ store.salePrice }}</td>
+              <td v-if="store.salePrice !== null">
+                <s>${{ roundPrice(store.price) }}</s><br/>
+                ${{ roundPrice(store.salePrice) }}
+              </td>
               <td v-else>${{ store.price }}</td>
             </tr>
           </table>
@@ -64,6 +67,7 @@ import Pagination from '@/components/Pagination'
 import SearchRadiusFilters from '@/components/SearchRadiusFilters'
 import {eventBus} from '@/main.js'
 import { mapGetters } from 'vuex'
+import { mapFields } from 'vuex-map-fields'
 export default {
   data () {
     return {
@@ -108,19 +112,7 @@ export default {
   },
   computed: {
     ...mapGetters(['lat', 'lng']),
-    mode: {
-      set (mode) {
-        if (mode === 'all') {
-          delete this.$route.query.r
-          this.$store.commit('modeAll')
-        } else {
-          this.$store.commit('modeNear')
-        }
-      },
-      get () {
-        return this.$store.state.location.mode
-      }
-    },
+    ...mapFields(['mode']),
     radius: {
       set (radius) {
         this.$route.query.r = radius
@@ -175,17 +167,10 @@ export default {
         })
     },
     setRadiusParams () {
-      if (this.radius !== null) {
-        this.mode = 'near'
-      } else if (typeof this.$route.query.r !== 'undefined') {
+      if (typeof this.$route.query.r !== 'undefined') {
         this.mode = 'near'
         this.radius = parseInt(this.$route.query.r)
         this.$store.dispatch('getLocation')
-          .then((loc) => {
-            this.getStores()
-          }).catch((err) => {
-            console.log(err)
-          })
       } else {
         this.mode = 'all'
       }
@@ -223,6 +208,9 @@ export default {
     },
     scrollToTop () {
       window.scrollTo(0, 100)
+    },
+    roundPrice (num) {
+      return (Math.round(num * 100) / 100).toFixed(2)
     }
   },
   name: 'ItemStores'
