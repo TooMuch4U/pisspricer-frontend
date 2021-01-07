@@ -69,6 +69,7 @@ import RegionFilters from '@/components/RegionFilters'
 import CategoryFilters from '@/components/CategoryFilters'
 import SearchRadiusFilters from '@/components/SearchRadiusFilters'
 import { mapGetters } from 'vuex'
+import { mapFields } from 'vuex-map-fields'
 
 export default {
   data () {
@@ -110,6 +111,7 @@ export default {
   },
   computed: {
     ...mapGetters(['lat', 'lng']),
+    ...mapFields(['mode']),
     pages () {
       if (this.isLoading || this.totalCount <= this.itemsPerPage) {
         return [1]
@@ -125,19 +127,6 @@ export default {
       },
       get () {
         return this.$store.state.location.radius
-      }
-    },
-    mode: {
-      set (mode) {
-        if (mode === 'all') {
-          delete this.$route.query.r
-          this.$store.commit('modeAll')
-        } else {
-          this.$store.commit('modeNear')
-        }
-      },
-      get () {
-        return this.$store.state.location.mode
       }
     },
     searchParams () {
