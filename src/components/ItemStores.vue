@@ -67,6 +67,7 @@ import Pagination from '@/components/Pagination'
 import SearchRadiusFilters from '@/components/SearchRadiusFilters'
 import {eventBus} from '@/main.js'
 import { mapGetters } from 'vuex'
+import { mapFields } from 'vuex-map-fields'
 export default {
   data () {
     return {
@@ -111,19 +112,7 @@ export default {
   },
   computed: {
     ...mapGetters(['lat', 'lng']),
-    mode: {
-      set (mode) {
-        if (mode === 'all') {
-          delete this.$route.query.r
-          this.$store.commit('modeAll')
-        } else {
-          this.$store.commit('modeNear')
-        }
-      },
-      get () {
-        return this.$store.state.location.mode
-      }
-    },
+    ...mapFields(['mode']),
     radius: {
       set (radius) {
         this.$route.query.r = radius
