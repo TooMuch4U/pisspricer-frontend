@@ -25,7 +25,7 @@
       </div>
       <span class="text-right order-last w-50">
         <router-link :to="{name: 'logout'}" v-if="loggedIn">
-          logout
+          <font-awesome-icon class="text-dark" icon="user" />
         </router-link>
 
         <div v-else>
