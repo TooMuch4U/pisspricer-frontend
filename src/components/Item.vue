@@ -47,8 +47,6 @@
 </template>
 
 <script>
-// TODO Update item photo when clicking on search item
-import {eventBus} from '@/main.js'
 export default {
   data () {
     return {
