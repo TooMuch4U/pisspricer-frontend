@@ -1,44 +1,52 @@
 <template>
   <div>
-    <nav class="navbar flex-nowrap d-flex navbar-light border-bottom">
-      <div class="d-flex w-50 order-0">
-      </div>
-      <div class="d-flex justify-content-center order-2" id="collapsingNavbar">
-        <ul class="navbar-nav flex-sm-row">
-          <li class="nav-item">
-            <router-link class="navbar-brand"
-                         :to="{ name: 'home' }">
-              Pisspricer
+    <div class="container-fluid">
+      <div class="row border-bottom">
+        <div class="col-1 d-none d-md-block"/>
+
+        <nav class="navbar flex-nowrap d-flex d-md-flex navbar-light col-12 col-md-10">
+          <div class="d-flex w-50 order-0">
+          </div>
+          <div class="d-flex justify-content-center order-2" id="collapsingNavbar">
+            <ul class="navbar-nav flex-sm-row">
+              <li class="nav-item">
+                <router-link class="navbar-brand"
+                             :to="{ name: 'home' }">
+                  Pisspricer
+                </router-link>
+              </li>
+
+              <li class="nav-item">
+                <form action="." @submit.prevent>
+                  <input class="form-control mt-2 input-outline shadow-none"
+                         type="search"
+                         v-model="searchTerm"
+                         id="search-input"
+                         placeholder="Search"
+                         @keyup="getPreview($event)"
+                         @keyup.enter="searchClicked">
+                </form>
+              </li>
+            </ul>
+          </div>
+          <span class="text-right order-last w-50">
+            <router-link :to="{name: 'logout'}" v-if="loggedIn">
+              <font-awesome-icon class="text-dark" size="sm" :icon="['fas', 'user']" />
             </router-link>
-          </li>
 
-          <li class="nav-item">
-            <form action="." @submit.prevent>
-              <input class="form-control mt-2 input-outline shadow-none"
-                     type="search"
-                     v-model="searchTerm"
-                     id="search-input"
-                     placeholder="Search"
-                     @keyup="getPreview($event)"
-                     @keyup.enter="searchClicked">
-            </form>
-          </li>
-        </ul>
+            <div v-else>
+
+              <router-link :to="{name: 'login'}">
+                <font-awesome-icon class="text-dark" size="sm" :icon="['far', 'user']" />
+              </router-link>
+            </div>
+          </span>
+
+        </nav>
+
+        <div class="col-1 d-none d-md-block"/>
       </div>
-      <span class="text-right order-last w-50">
-        <router-link :to="{name: 'logout'}" v-if="loggedIn">
-          <font-awesome-icon class="text-dark" icon="user" />
-        </router-link>
-
-        <div v-else>
-          <router-link :to="{name: 'login'}">login</router-link>
-          /
-          <router-link :to="{name: 'register'}">register</router-link>
-        </div>
-      </span>
-
-    </nav>
-
+    </div>
 
     <div class="mx-auto" id="suggestions" v-if="items !== null" v-click-outside="hideWindow">
       <ul class="list-group">
