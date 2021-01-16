@@ -9,6 +9,13 @@ import VueGeolocation from 'vue-browser-geolocation'
 import './assets/css/styles.css'
 import Vuex from 'vuex'
 import store from './store'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+// Font awesome icons
+library.add(faUser)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(VueGeolocation)
 Vue.use(VueAxios, axios)
