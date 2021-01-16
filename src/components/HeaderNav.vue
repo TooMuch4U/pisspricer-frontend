@@ -15,8 +15,7 @@
                   Pisspricer
                 </router-link>
               </li>
-
-              <li class="nav-item">
+              <li class="nav-item d-none d-sm-block">
                 <form action="." @submit.prevent>
                   <input class="form-control mt-2 input-outline shadow-none"
                          type="search"
@@ -29,7 +28,7 @@
               </li>
             </ul>
           </div>
-          <span class="text-right order-last w-50">
+          <span class="text-right order-last w-50 pr-1">
             <router-link :to="{name: 'logout'}" v-if="loggedIn">
               <font-awesome-icon class="text-dark" size="sm" :icon="['fas', 'user']" />
             </router-link>
@@ -41,6 +40,26 @@
               </router-link>
             </div>
           </span>
+
+        </nav>
+
+        <nav class="navbar pt-0 w-100 mb-1 d-sm-none">
+
+          <div class="d-flex justify-content-center order-2 w-100" >
+            <ul class="navbar-nav flex-sm-row w-100">
+              <li class="nav-item w-100">
+                <form action="." @submit.prevent>
+                  <input class="form-control input-outline shadow-none w-100"
+                         type="search"
+                         v-model="searchTerm"
+                         id="search-input2"
+                         placeholder="Search"
+                         @keyup="getPreview($event)"
+                         @keyup.enter="searchClicked">
+                </form>
+              </li>
+            </ul>
+          </div>
 
         </nav>
 
