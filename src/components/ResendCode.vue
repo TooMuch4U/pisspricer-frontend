@@ -23,7 +23,6 @@
           {{ success }}
         </div>
 
-
         <form v-on:submit.prevent>
           <div class="form-group text-left">
             <label for="email">Email address</label>
