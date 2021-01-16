@@ -14,7 +14,7 @@
 
           <li class="nav-item">
             <input class="form-control mt-2 input-outline shadow-none"
-                   type="text"
+                   type="search"
                    v-model="searchTerm"
                    id="search-input"
                    placeholder="Search"
