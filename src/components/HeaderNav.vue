@@ -13,7 +13,7 @@
           </li>
 
           <li class="nav-item">
-            <form @submit.prevent>
+            <form action="." @submit.prevent>
               <input class="form-control mt-2 input-outline shadow-none"
                      type="search"
                      v-model="searchTerm"
