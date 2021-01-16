@@ -49,7 +49,7 @@
             <ul class="navbar-nav flex-sm-row w-100">
               <li class="nav-item w-100">
                 <form action="." @submit.prevent>
-                  <input class="form-control input-outline shadow-none w-100"
+                  <input class="form-control input-outline mb-2 shadow-none w-100"
                          type="search"
                          v-model="searchTerm"
                          id="search-input2"
