@@ -1,5 +1,5 @@
 import VueGeolocation from 'vue-browser-geolocation/src'
-import { getField, updateField } from 'vuex-map-fields';
+import { getField, updateField } from 'vuex-map-fields'
 
 let state = {
   lat: null,
