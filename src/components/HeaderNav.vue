@@ -13,13 +13,15 @@
           </li>
 
           <li class="nav-item">
-            <input class="form-control mt-2 input-outline shadow-none"
-                   type="search"
-                   v-model="searchTerm"
-                   id="search-input"
-                   placeholder="Search"
-                   @keyup="getPreview($event)"
-                   @keyup.enter="searchClicked">
+            <form @submit.prevent>
+              <input class="form-control mt-2 input-outline shadow-none"
+                     type="search"
+                     v-model="searchTerm"
+                     id="search-input"
+                     placeholder="Search"
+                     @keyup="getPreview($event)"
+                     @keyup.enter="searchClicked">
+            </form>
           </li>
         </ul>
       </div>
