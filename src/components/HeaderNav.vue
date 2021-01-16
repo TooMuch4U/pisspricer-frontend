@@ -14,7 +14,7 @@
 
           <li class="nav-item">
             <input class="form-control mt-2 input-outline shadow-none"
-                   type="text"
+                   type="search"
                    v-model="searchTerm"
                    id="search-input"
                    placeholder="Search"
@@ -25,7 +25,7 @@
       </div>
       <span class="text-right order-last w-50">
         <router-link :to="{name: 'logout'}" v-if="loggedIn">
-          logout
+          <font-awesome-icon class="text-dark" icon="user" />
         </router-link>
 
         <div v-else>
