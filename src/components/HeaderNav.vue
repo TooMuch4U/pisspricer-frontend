@@ -48,7 +48,7 @@
           <div class="d-flex justify-content-center order-2 w-100" >
             <ul class="navbar-nav flex-sm-row w-100">
               <li class="nav-item w-100">
-                <form action="." @submit.prevent>
+                <form action="." @submit="hideWindow">
                   <input class="form-control input-outline mb-2 shadow-none w-100"
                          type="search"
                          v-model="searchTerm"
