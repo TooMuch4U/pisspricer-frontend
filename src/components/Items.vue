@@ -3,8 +3,6 @@
       <div class="row">
         <div class="col-md-1 d-none d-md-block"/>
         <div class="col-md-3 col-12 text-left">
-
-          <CategoryFilters @update="(catFilters) => {this.filterCats = catFilters}"/>
           <SearchRadiusFilters/>
 
         </div>
@@ -83,8 +81,8 @@ export default {
       isLoading: 1,
       itemsPerPage: 24,
       order: 'best-match',
-      filterCats: [],
-      filterRegion: null
+      filterRegion: null,
+      filterCats: []
     }
   },
   components: {
