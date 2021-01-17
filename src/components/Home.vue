@@ -57,9 +57,7 @@
 
       <div class='d-md-none col-1'></div>
 
-
     </div>
-
 
     <div class="row mx-lg-0 mx-1 mb-5 no-gutters">
 
