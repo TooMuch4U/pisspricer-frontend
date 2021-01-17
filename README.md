@@ -1,5 +1,6 @@
 # Pisspricer Frontend
 ![Staging Branch](https://github.com/TooMuch4U/pisspricer-frontend/workflows/DEPLOY%20TO%20STAGING/badge.svg)
+![DEPLOY TO PRODUCTION](https://github.com/TooMuch4U/pisspricer-frontend/workflows/DEPLOY%20TO%20PRODUCTION/badge.svg)
 > A Vue.js project
 
 ## Build Setup
