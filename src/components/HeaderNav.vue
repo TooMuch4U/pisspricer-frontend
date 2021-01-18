@@ -29,7 +29,7 @@
             </ul>
           </div>
           <span class="text-right order-last w-50 pr-1">
-            <router-link :to="{name: 'logout'}" v-if="loggedIn && permissionLevel < 5">
+            <router-link :to="{name: 'logout'}" v-if="loggedIn && !isAdmin">
               <font-awesome-icon class="text-dark" size="sm" :icon="['fas', 'user']" />
             </router-link>
 
@@ -109,7 +109,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['permissionLevel']),
+    ...mapGetters(['isAdmin']),
     loggedIn () {
       return this.$store.state.user.loggedIn
     }
