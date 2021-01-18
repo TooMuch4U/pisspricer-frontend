@@ -8,6 +8,7 @@ import Logout from '@/components/Logout'
 import Register from '@/components/Register'
 import VerifyUser from '@/components/VerifyUser'
 import ResendCode from '@/components/ResendCode'
+import AdminPage from '../components/AdminPage'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/items/:slug',
       name: 'item',
       component: ItemStores
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminPage
     }
   ],
   mode: 'history'
