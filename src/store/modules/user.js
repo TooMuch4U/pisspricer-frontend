@@ -123,11 +123,11 @@ let actions = {
         })
     })
   },
-  loadUserDetails ({dispatch, commit, state}) {
+  loadUserDetails ({dispatch, commit, getters}) {
     return new Promise((resolve, reject) => {
       // Check if the auth token cookie was set
       const tokenCookie = Cookies.get('authToken')
-      if (tokenCookie && !state.firstname) {
+      if (tokenCookie && getters.userDetailsLoaded) {
         // Load in userId and cookie
         commit('authToken', tokenCookie)
         commit('userId', Cookies.get('userId'))
@@ -155,6 +155,9 @@ let getters = {
   },
   isAdmin: state => {
     return state.permissionLevel > 4
+  },
+  userDetailsLoaded: state => {
+    return !state.firstname
   }
 }
 
