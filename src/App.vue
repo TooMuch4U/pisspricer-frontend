@@ -14,6 +14,9 @@ export default {
     HeaderNav,
     Footer
   },
+  mounted () {
+    this.$store.dispatch('loadUserDetails')
+  },
   name: 'App'
 }
 </script>
