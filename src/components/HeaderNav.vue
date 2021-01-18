@@ -29,8 +29,12 @@
             </ul>
           </div>
           <span class="text-right order-last w-50 pr-1">
-            <router-link :to="{name: 'logout'}" v-if="loggedIn">
+            <router-link :to="{name: 'logout'}" v-if="loggedIn && permissionLevel < 5">
               <font-awesome-icon class="text-dark" size="sm" :icon="['fas', 'user']" />
+            </router-link>
+
+            <router-link :to="{name: 'logout'}" v-else-if="loggedIn">
+              <font-awesome-icon class="gold-colour" size="sm" :icon="['fas', 'user']" />
             </router-link>
 
             <div v-else>
@@ -92,6 +96,7 @@
 
 <script>
 import {eventBus} from '@/main.js'
+import {mapGetters} from 'vuex'
 export default {
   data () {
     return {
@@ -104,9 +109,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['permissionLevel']),
     loggedIn () {
       return this.$store.state.user.loggedIn
     }
+
   },
   methods: {
     searchItems: function () {
@@ -234,6 +241,10 @@ export default {
   width: 40px;
   height: 20px;
   display: inline-block;
+}
+
+.gold-colour {
+  color: #D4AF37;
 }
 
 @media (min-width: 576px) {
