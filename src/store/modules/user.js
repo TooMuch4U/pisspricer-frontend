@@ -149,6 +149,9 @@ let getters = {
   },
   permissionLevel: state => {
     return state.permissionLevel
+  },
+  firstname: state => {
+    return state.firstname
   }
 }
 
