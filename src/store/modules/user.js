@@ -152,6 +152,9 @@ let getters = {
   },
   firstname: state => {
     return state.firstname
+  },
+  isAdmin: state => {
+    return state.permissionLevel > 4
   }
 }
 
