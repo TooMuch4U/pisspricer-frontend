@@ -21,7 +21,7 @@
         </div>
 
         <div v-if="loggedIn">
-          currently logged in as {{name}}
+          currently logged in as {{firstname}}
           <button class="btn btn-primary" @click="logout">Logout</button>
         </div>
 
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: 'Logout',
   data () {
@@ -46,20 +47,7 @@ export default {
     }
   },
   computed: {
-    loggedIn () {
-      return this.$store.state.user.loggedIn
-    }
-  },
-  created () {
-    if (this.$store.state.user.loggedIn) {
-      this.$store.dispatch('getCurUserInfo')
-        .then((info) => {
-          this.name = info.firstname
-        })
-        .catch((err) => {
-          this.error = err.response.statusText
-        })
-    }
+    ...mapGetters(['loggedIn', 'firstname'])
   },
   methods: {
     logout () {
