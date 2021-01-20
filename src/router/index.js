@@ -9,6 +9,8 @@ import Register from '@/components/Register'
 import VerifyUser from '@/components/VerifyUser'
 import ResendCode from '@/components/ResendCode'
 import AdminPage from '../components/AdminPage'
+import AdminCombineSkus from '../components/admin-pages/CombineSkus'
+import AdminHome from '../components/admin-pages/Home'
 
 Vue.use(Router)
 
@@ -57,7 +59,17 @@ export default new Router({
     {
       path: '/admin',
       name: 'admin',
-      component: AdminPage
+      component: AdminPage,
+      children: [
+        {
+          path: '',
+          component: AdminHome
+        },
+        {
+          path: 'combine',
+          component: AdminCombineSkus
+        }
+      ]
     }
   ],
   mode: 'history'
