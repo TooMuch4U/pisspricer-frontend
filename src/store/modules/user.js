@@ -158,6 +158,9 @@ let getters = {
   },
   userDetailsLoaded: state => {
     return !state.firstname
+  },
+  getAuthHeader: state => {
+    return { 'X-Authorization': state.authToken }
   }
 }
 
