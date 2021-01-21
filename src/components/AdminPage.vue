@@ -26,18 +26,12 @@
         <div class="col-sm-2 d-none d-sm-block"></div>
       </div>
 
-      <div class="row py-3 mx-1">
-        <div class="col-sm-2 d-none d-sm-block"></div>
-        <div class="col-sm-8 col-12">
-          <h4 class="mb-0"></h4>
-        </div>
-        <div class="col-sm-2 d-none d-sm-block"></div>
-      </div>
+      <AdminNav></AdminNav>
 
-      <div class="row text-center">
+      <div class="row text-center min-height">
         <div class="col-12 text-center">
 
-          body
+          <router-view/>
         </div>
 
       </div>
@@ -48,10 +42,14 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import AdminNav from '@/components/admin-pages/AdminNav'
 export default {
   name: 'AdminPage',
   computed: {
     ...mapGetters(['isAdmin', 'loggedIn'])
+  },
+  components: {
+    AdminNav
   }
 }
 </script>
