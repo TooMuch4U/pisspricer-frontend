@@ -15,6 +15,16 @@ let actions = {
           reject(err)
         })
     })
+  },
+  combineItems ({dispatch, getters}, {skuA, skuB, newItem}) {
+    return new Promise((resolve, reject) => {
+      axios.patch(
+        `${process.env.API_URL}/items/${skuA}/combine/${skuB}`,
+        newItem,
+        { headers: getters.getAuthHeader })
+        .then((res) => { resolve(res) })
+        .catch((err) => { reject(err) })
+    })
   }
 }
 
