@@ -22,7 +22,7 @@
         </li>
       </ul>
       <form class="form-inline my-2 my-md-0">
-        <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+        <router-link class="nav-link" :to="{name: 'logout'}">Logout</router-link>
       </form>
     </div>
   </nav>
