@@ -37,6 +37,7 @@
 
           <table class="text-left table" v-if="item_list != null">
             <tr v-for="item in item_list" v-bind:key="item.sku">
+
               <td class="text-center image-div">
                   <img v-if="item.hasImage" class="item-image align-middle" :src="imageUrl(item.sku)">
                   <img v-else class="item-image" src="../../static/favicon.png">
@@ -49,11 +50,17 @@
                 </p>
                 <p class="text-muted mb-0">In {{ item.storeCount }} store{{ item.storeCount == 1 ? '' : 's'}}</p></td>
               <td>${{ roundPrice(item.bestPrice) }}</td>
+
+              <td v-if="isAdmin">
+                <input type="checkbox" @change="setSkuA(item.sku)">
+                <input type="checkbox" @change="setSkuB(item.sku)">
+              </td>
             </tr>
+
           </table>
 
+          <router-link v-if="isAdmin" :to="combineUrl" type="button" class="btn btn-primary">Combine</router-link>
           <Pagination :pages="pages" :currentPage.sync="currentPage" />
-
         </div>
         <div class="col-1"/>
       </div>
@@ -82,7 +89,11 @@ export default {
       itemsPerPage: 24,
       order: 'best-match',
       filterRegion: null,
-      filterCats: []
+      filterCats: [],
+      combineItems: {
+        a: null,
+        b: null
+      }
     }
   },
   components: {
@@ -108,7 +119,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['lat', 'lng']),
+    ...mapGetters(['lat', 'lng', 'isAdmin']),
     ...mapFields(['mode']),
     pages () {
       if (this.isLoading || this.totalCount <= this.itemsPerPage) {
@@ -145,6 +156,9 @@ export default {
         searchParams.lat = this.lat
       }
       return searchParams
+    },
+    combineUrl () {
+      return {path: '/admin/combine', query: this.combineItems}
     }
   },
   methods: {
@@ -184,6 +198,20 @@ export default {
     },
     roundPrice (num) {
       return (Math.round(num * 100) / 100).toFixed(2)
+    },
+    setSkuB (sku) {
+      if (this.combineItems.b === sku) {
+        this.combineItems.b = null
+      } else {
+        this.combineItems.b = sku
+      }
+    },
+    setSkuA (sku) {
+      if (this.combineItems.a === sku) {
+        this.combineItems.a = null
+      } else {
+        this.combineItems.a = sku
+      }
     }
   },
   name: 'Items'
