@@ -69,7 +69,7 @@
             <tr v-bind:key="name" v-for="(value, name) in itemInfoB.item">
 
               <td class="text-left">
-                <input class="form-control" :placeholder="name" :value="value" readonly>
+                <input class="form-control" @click="useValue(name, value)" :placeholder="name" :value="value" readonly>
               </td>
             </tr>
             </tbody>
@@ -210,6 +210,9 @@ export default {
           this.error = err.response.statusText
           this.success = null
         })
+    },
+    useValue (key, value) {
+      this.itemInfoA.item[key] = value
     }
   }
 }
