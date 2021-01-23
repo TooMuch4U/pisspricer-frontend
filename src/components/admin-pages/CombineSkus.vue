@@ -3,7 +3,7 @@
       <div class="row">
         <div class="col-12">
           <button @click="combine" type="button" class="btn btn-primary">Combine</button>
-          <button @click="swapPlaces" type="button" class="btn btn-secondary"><-></button>
+          <button @click="swapPlaces" type="button" class="btn btn-secondary">Swap</button>
         </div>
       </div>
 
