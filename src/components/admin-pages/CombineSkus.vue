@@ -182,34 +182,32 @@ export default {
       this.itemInfoB.sku = sku
     },
     combine () {
-      if (!confirm('Do you really want to combine these skus?')) {
-        return
-      }
-
-      // Remove null and un-changable items
-      let newItem = {...this.itemInfoA.item}
-      for (let key in newItem) {
-        if (newItem[key] === null || newItem[key] === undefined || !this.canChange(key)) {
-          delete newItem[key]
+      if (confirm('Do you really want to combine these skus?')) {
+        // Remove null and un-changable items
+        let newItem = {...this.itemInfoA.item}
+        for (let key in newItem) {
+          if (newItem[key] === null || newItem[key] === undefined || !this.canChange(key)) {
+            delete newItem[key]
+          }
         }
-      }
 
-      // Send api request
-      this.$store.dispatch(
-        'combineItems',
-        {
-          skuA: this.itemInfoA.sku,
-          skuB: this.itemInfoB.sku,
-          newItem
-        })
-        .then((res) => {
-          this.success = 'Success!'
-          this.error = null
-        })
-        .catch((err) => {
-          this.error = err.response.statusText
-          this.success = null
-        })
+        // Send api request
+        this.$store.dispatch(
+          'combineItems',
+          {
+            skuA: this.itemInfoA.sku,
+            skuB: this.itemInfoB.sku,
+            newItem
+          })
+          .then((res) => {
+            this.success = 'Success!'
+            this.error = null
+          })
+          .catch((err) => {
+            this.error = err.response.statusText
+            this.success = null
+          })
+      }
     },
     useValue (key, value) {
       this.itemInfoA.item[key] = value
