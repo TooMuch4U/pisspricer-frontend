@@ -35,7 +35,7 @@
 
           <p v-if="itemInfoA.imgSize.height">{{ itemInfoA.imgSize.height }} x {{ itemInfoA.imgSize.height }}</p>
 
-          <table class="m-auto">
+          <table class="m-auto w-100 p-2">
             <tbody>
 
               <tr v-bind:key="name" v-for="(value, name) in itemInfoA.item">
@@ -63,7 +63,7 @@
 
           <p v-if="itemInfoB.imgSize.height">{{ itemInfoB.imgSize.height }} x {{ itemInfoB.imgSize.height }}</p>
 
-          <table class="m-auto">
+          <table class="m-auto w-100 p-2">
             <tbody>
 
             <tr v-bind:key="name" v-for="(value, name) in itemInfoB.item">
