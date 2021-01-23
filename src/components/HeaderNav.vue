@@ -33,7 +33,7 @@
               <font-awesome-icon class="text-dark" size="sm" :icon="['fas', 'user']" />
             </router-link>
 
-            <router-link :to="{name: 'logout'}" v-else-if="loggedIn">
+            <router-link :to="{name: 'admin'}" v-else-if="loggedIn">
               <font-awesome-icon class="gold-colour" size="sm" :icon="['fas', 'user']" />
             </router-link>
 
