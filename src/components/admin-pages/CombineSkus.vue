@@ -182,7 +182,7 @@ export default {
       this.itemInfoB.sku = sku
     },
     combine () {
-      if (confirm('Do you really want to combine these skus?')) {
+      if (window.confirm('Do you really want to combine these skus?')) {
         // Remove null and un-changable items
         let newItem = {...this.itemInfoA.item}
         for (let key in newItem) {
