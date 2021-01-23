@@ -3,6 +3,7 @@
       <div class="row">
         <div class="col-12">
           <button @click="combine" type="button" class="btn btn-primary">Combine</button>
+          <button @click="swapPlaces" type="button" class="btn btn-secondary"><-></button>
         </div>
       </div>
 
@@ -174,6 +175,11 @@ export default {
         })
         img.src = url
       })
+    },
+    swapPlaces () {
+      const sku = this.itemInfoA.sku
+      this.itemInfoA.sku = this.itemInfoB.sku
+      this.itemInfoB.sku = sku
     },
     combine () {
       if (!confirm('Do you really want to combine these skus?')) {
