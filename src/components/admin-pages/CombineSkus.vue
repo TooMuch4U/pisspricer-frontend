@@ -87,8 +87,8 @@ export default {
     return {
       error: null,
       success: null,
-      changeable: ['name', 'slug', 'brand', 'stdDrinks', 'alcoholContent', 'volumeTotal', 'categoryId', 'subcategoryId'],
-      numberFields: ['stdDrinks', 'alcoholContent', 'volumeTotal', 'categoryId', 'subcategoryId'],
+      changeable: ['name', 'slug', 'brand', 'stdDrinks', 'alcoholContent', 'volumeEach', 'categoryId', 'subcategoryId', 'packSize'],
+      numberFields: ['stdDrinks', 'alcoholContent', 'volumeEach', 'categoryId', 'subcategoryId', 'packSize'],
       itemInfoA: {
         sku: null,
         error: null,
