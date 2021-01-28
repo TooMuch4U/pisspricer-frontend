@@ -19,9 +19,15 @@
               <p class="text-muted d-inline-block m-0">{{ itemData.category ? itemData.category : '?' }}</p>
               <br/>
 
-              <p class="m-0 d-inline-block">Volume: </p>
+              <p class="m-0 d-inline-block">Volume Each: </p>
               <p class="text-muted d-inline-block m-0">
-                {{ itemData.volumeTotal ? itemData.volumeTotal + 'ml' : '?' }}
+                {{ itemData.volumeEach ? itemData.volumeEach + 'ml' : '?' }}
+              </p>
+              <br/>
+
+              <p class="m-0 d-inline-block">Pack Size: </p>
+              <p class="text-muted d-inline-block m-0">
+                {{ itemData.packSize ? itemData.packSize : '?' }}
               </p>
               <br/>
 
