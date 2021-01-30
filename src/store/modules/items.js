@@ -25,6 +25,16 @@ let actions = {
         .then((res) => { resolve(res) })
         .catch((err) => { reject(err) })
     })
+  },
+  editItem ({dispatch, getters}, {sku, newParams}) {
+    return new Promise((resolve, reject) => {
+      axios.patch(
+        `${process.env.API_URL}/items/${sku}`,
+        newParams,
+        { headers: getters.getAuthHeader })
+        .then((res) => { resolve(res) })
+        .catch((err) => { reject(err) })
+    })
   }
 }
 
