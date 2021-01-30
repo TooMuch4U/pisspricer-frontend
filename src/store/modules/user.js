@@ -88,6 +88,7 @@ let actions = {
     Cookies.remove('userId')
     Cookies.remove('authToken')
     commit('setLoggedIn', false)
+    commit('userDetails', {})
     // Todo send logout to api
   },
   register ({commit}, {referer, reqBody}) {
