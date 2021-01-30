@@ -2,7 +2,8 @@
   <div id="footer" class="container-fluid mt-3">
     <div class="row foot-div">
       <div class="col-12">
-        <p class="text-center mx-auto mt-3">Tom Rizzi 2020</p>
+        <p class="text-center mx-auto mt-3">&copy; Tom Rizzi 2021</p>
+        <p class="text-center mx-auto">tom@pisspricer.co.nz</p>
       </div>
     </div>
   </div>
