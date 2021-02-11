@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import user from './modules/user'
 import location from './modules/location'
 import items from './modules/items'
+import stores from './modules/stores'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ export default new Vuex.Store({
   modules: {
     user,
     location,
-    items
+    items,
+    stores
   },
   strict: debug
 })
