@@ -12,6 +12,9 @@
         <li class="nav-item">
           <router-link class="nav-link" exact-active-class="active" to="/admin/combine">Combine</router-link>
         </li>
+        <li class="nav-item">
+          <router-link class="nav-link" exact-active-class="active" to="/admin/brands">Brands</router-link>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
           <div class="dropdown-menu" aria-labelledby="dropdown09">
