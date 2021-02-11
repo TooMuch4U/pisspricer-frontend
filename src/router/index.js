@@ -11,6 +11,7 @@ import ResendCode from '@/components/ResendCode'
 import AdminPage from '../components/AdminPage'
 import AdminCombineSkus from '../components/admin-pages/CombineSkus'
 import AdminHome from '../components/admin-pages/Home'
+import Brands from '../components/admin-pages/Brands'
 
 Vue.use(Router)
 
@@ -68,6 +69,10 @@ export default new Router({
         {
           path: 'combine',
           component: AdminCombineSkus
+        },
+        {
+          path: 'brands',
+          component: Brands
         }
       ]
     }
