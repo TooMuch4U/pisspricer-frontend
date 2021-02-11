@@ -15,6 +15,32 @@ let actions = {
           reject(err)
         })
     })
+  },
+  createBrand ({dispatch, commit, getters}, newBrand) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${process.env.API_URL}/brands`,
+        newBrand,
+        { headers: getters.getAuthHeader })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  },
+  putBrandImage ({dispatch, getters}, {imageData, brandId}) {
+    return new Promise((resolve, reject) => {
+      axios.put(`${process.env.API_URL}/brands/${brandId}/image`,
+        imageData,
+        { headers: getters.getAuthHeader })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
   }
 }
 
