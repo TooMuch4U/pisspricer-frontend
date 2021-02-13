@@ -4,12 +4,22 @@
       <div class="row my-1">
         <div class="col-1 d-none d-md-block"></div>
         <div class="col-12 col-md-10 bottom-border pb-3">
+
+          <div class="row" v-if="success">
+            <div class="col-12 my-2 text-center">
+              <div class="alert alert-success" role="alert">
+                {{ success }}
+              </div>
+            </div>
+          </div>
+
           <table class="m-auto" v-if="itemData !== null">
             <tr>
               <td>
                 <img v-if="itemData.hasImage" class="mr-3 item-image-big" :src="`${staticUrl}items/${itemData.sku}.jpeg`">
                 </td>
               <td class="text-left">
+
                 <h5 class="m-0 d-inline">
                   <b>{{ itemData.name }}</b>
                 </h5>
@@ -77,14 +87,6 @@
                 <div class="col-12">
                   <div class="alert alert-danger" role="alert">
                     {{ error }}
-                  </div>
-                </div>
-              </div>
-
-              <div class="row" v-if="success">
-                <div class="col-12 my-2">
-                  <div class="alert alert-success" role="alert">
-                    {{ success }}
                   </div>
                 </div>
               </div>
@@ -172,11 +174,11 @@ export default {
         }
       }
 
-      console.log(changes)
-
       this.$store.dispatch('editItem', {newParams: changes, sku: this.itemData.sku})
         .then((res) => {
           this.success = 'Success'
+          // eslint-disable-next-line
+          $('#editModal').modal('hide')
         })
         .catch((err) => {
           this.error = err.response.statusText
