@@ -48,8 +48,13 @@
                     {{ item.name }}
                   </router-link>
                 </p>
-                <p class="text-muted mb-0">In {{ item.storeCount }} store{{ item.storeCount == 1 ? '' : 's'}}</p></td>
-              <td>${{ roundPrice(item.bestPrice) }}</td>
+                <p class="text-muted mb-0">In {{ item.storeCount }} store{{ item.storeCount == 1 ? '' : 's'}}</p>
+              </td>
+              <td>${{ roundPrice(item.bestPrice) }}
+                <p class="text-muted mb-0" v-if="item.dollarsPerStd">
+                  ${{ roundPrice(item.dollarsPerStd) }} / std
+                </p>
+              </td>
 
               <td v-if="isAdmin">
                 <input type="checkbox" @change="setSkuA(item.sku)">
