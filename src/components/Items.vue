@@ -25,8 +25,10 @@
                   <label for="sortby">Sort by: </label>
                   <select id="sortby" v-model="order" class="float-sm-right no-outline pointer-cursor bg-white">
                     <option value="best-match" selected="selected">Relevance</option>
-                    <option value="price-desc">Price high</option>
-                    <option value="price-asc">Price low</option>
+                    <option value="price-desc">Price (high)</option>
+                    <option value="price-asc">Price (low)</option>
+                    <option value="std-asc">Price per std (low)</option>
+                    <option value="std-desc">Price per std (high)</option>
                     <option value="alpha-asc">Alphabetical</option>
                   </select>
                 </div>
