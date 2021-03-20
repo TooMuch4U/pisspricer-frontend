@@ -53,7 +53,7 @@
                 <p class="text-muted mb-0">In {{ item.storeCount }} store{{ item.storeCount == 1 ? '' : 's'}}</p>
               </td>
               <td>${{ roundPrice(item.bestPrice) }}
-                <p class="text-muted mb-0" v-if="item.dollarsPerStd">
+                <p class="text-muted mb-0 text-nowrap" v-if="item.dollarsPerStd">
                   ${{ roundPrice(item.dollarsPerStd) }} / std
                 </p>
               </td>
