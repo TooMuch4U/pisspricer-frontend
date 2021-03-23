@@ -191,7 +191,7 @@ export default {
       if (hours < 1) {
         return 'in the last hour'
       } else if (hours < 13) {
-        return `${hours} hours ago`
+        return `${Math.floor(hours)} hours ago`
       } else if (days < 1) {
         return 'in the last 24 hours'
       } else if (days < 7) {
