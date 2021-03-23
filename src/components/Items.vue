@@ -37,32 +37,35 @@
             </div>
           </div>
 
-          <table class="text-left table" v-if="item_list != null">
-            <tr v-for="item in item_list"
-                v-bind:key="item.sku"
-            >
-              <td class="text-center image-div pointer-cursor" @click="goToItem(item)">
-                  <img v-if="item.hasImage" class="item-image align-middle" :src="imageUrl(item.sku)">
-                  <img v-else class="item-image" src="../../static/favicon.png">
-              </td>
-              <td @click="goToItem(item)" class="pointer-cursor">
-                <p class="mb-0">
-                  {{ item.name }}
-                </p>
-                <p class="text-muted mb-0">In {{ item.storeCount }} store{{ item.storeCount == 1 ? '' : 's'}}</p>
-              </td>
-              <td>${{ roundPrice(item.bestPrice) }}
-                <p class="text-muted mb-0 text-nowrap" v-if="item.dollarsPerStd">
-                  ${{ roundPrice(item.dollarsPerStd) }} / std
-                </p>
-              </td>
+          <table class="text-left table table-hover" v-if="item_list != null">
+            <tbody>
 
-              <td v-if="isAdmin">
-                <input type="checkbox" @change="setSkuA(item.sku)">
-                <input type="checkbox" @change="setSkuB(item.sku)">
-              </td>
-            </tr>
+              <tr v-for="item in item_list"
+                  v-bind:key="item.sku"
+              >
+                <td class="text-center image-div pointer-cursor" @click="goToItem(item)">
+                    <img v-if="item.hasImage" class="item-image align-middle" :src="imageUrl(item.sku)">
+                    <img v-else class="item-image" src="../../static/favicon.png">
+                </td>
+                <td @click="goToItem(item)" class="pointer-cursor">
+                  <p class="mb-0">
+                    {{ item.name }}
+                  </p>
+                  <p class="text-muted mb-0">In {{ item.storeCount }} store{{ item.storeCount == 1 ? '' : 's'}}</p>
+                </td>
+                <td>${{ roundPrice(item.bestPrice) }}
+                  <p class="text-muted mb-0 text-nowrap" v-if="item.dollarsPerStd">
+                    ${{ roundPrice(item.dollarsPerStd) }} / std
+                  </p>
+                </td>
 
+                <td v-if="isAdmin">
+                  <input type="checkbox" @change="setSkuA(item.sku)">
+                  <input type="checkbox" @change="setSkuB(item.sku)">
+                </td>
+              </tr>
+
+            </tbody>
           </table>
 
           <router-link v-if="isAdmin" :to="combineUrl" type="button" class="btn btn-primary">Combine</router-link>
