@@ -38,17 +38,16 @@
           </div>
 
           <table class="text-left table" v-if="item_list != null">
-            <tr v-for="item in item_list" v-bind:key="item.sku">
-
-              <td class="text-center image-div">
+            <tr v-for="item in item_list"
+                v-bind:key="item.sku"
+            >
+              <td class="text-center image-div pointer-cursor" @click="goToItem(item)">
                   <img v-if="item.hasImage" class="item-image align-middle" :src="imageUrl(item.sku)">
                   <img v-else class="item-image" src="../../static/favicon.png">
               </td>
-              <td>
+              <td @click="goToItem(item)" class="pointer-cursor">
                 <p class="mb-0">
-                  <router-link class="text-dark" :to="getLinkParams(item)">
-                    {{ item.name }}
-                  </router-link>
+                  {{ item.name }}
                 </p>
                 <p class="text-muted mb-0">In {{ item.storeCount }} store{{ item.storeCount == 1 ? '' : 's'}}</p>
               </td>
@@ -219,6 +218,9 @@ export default {
       } else {
         this.combineItems.a = sku
       }
+    },
+    goToItem (item) {
+      this.$router.push(this.getLinkParams(item))
     }
   },
   name: 'Items'
