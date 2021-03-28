@@ -1,22 +1,24 @@
 # Pisspricer Frontend
 ![Staging Branch](https://github.com/TooMuch4U/pisspricer-frontend/workflows/DEPLOY%20TO%20STAGING/badge.svg)
 ![DEPLOY TO PRODUCTION](https://github.com/TooMuch4U/pisspricer-frontend/workflows/DEPLOY%20TO%20PRODUCTION/badge.svg)
-> A Vue.js project
 
-## Build Setup
+Frontend Vue.js webapp for Pisspricer. A live deployed version can be found at [pisspricer.co.nz](https://pisspricer.co.nz)
+and the staging branch can be found at [dev.pisspricer.co.nz](https://dev.pisspricer.co.nz).
 
+## Setup
+Npm dependencies first need to be installed.
 ``` bash
-# install dependencies
 npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Running
+A development server can be run with
+``` bash
+npm run dev
+```
+
+And a production build can be generated with
+``` bash
+npm run build
+```
+
