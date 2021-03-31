@@ -3,7 +3,7 @@
     <div class="row py-3 bottom-border">
       <div class="col-sm-2 d-none d-sm-block"></div>
       <div class="col-sm-8 col-12">
-        <h4>Compare prices from New Zealand liquor stores, and get the most beer for your buck.</h4>
+        <h4>Search & compare prices from New Zealand liquor stores and supermarkets, and get the most beer for your buck.</h4>
       </div>
       <div class="col-sm-2 d-none d-sm-block"></div>
     </div>
