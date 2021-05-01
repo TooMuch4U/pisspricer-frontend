@@ -41,7 +41,7 @@
               </td>
               <td>
                 <p class="mb-0">{{ store.storeName }}</p>
-                <p class="text-muted mb-0 d-inline text-danger" v-if="wasUpdatedOverAWeekAgo(store.dateChecked)">
+                <p class="mb-0 d-inline text-danger" v-if="wasUpdatedOverAWeekAgo(store.dateChecked)">
                   Updated {{ getDaysAgoStr(store.dateChecked) }}
                 <p class="text-muted mb-0 d-inline" v-else>
                   Updated {{ getDaysAgoStr(store.dateChecked) }}
