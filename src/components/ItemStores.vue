@@ -43,8 +43,10 @@
                 <p class="mb-0">{{ store.storeName }}</p>
                 <p class="mb-0 d-inline text-danger" v-if="wasUpdatedOverAWeekAgo(store.dateChecked)">
                   Updated {{ getDaysAgoStr(store.dateChecked) }}
+                </p>
                 <p class="text-muted mb-0 d-inline" v-else>
                   Updated {{ getDaysAgoStr(store.dateChecked) }}
+                </p>
                 <p class="text-muted mb-0 d-inline" v-if="store.distance !== 0">, {{ store.distance.toFixed(1) }}km</p>
               </td>
               <td v-if="store.salePrice !== null">
