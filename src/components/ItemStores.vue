@@ -209,7 +209,7 @@ export default {
         past.getMonth() === today.getMonth() &&
         past.getDate() === today.getDate())
       const dateIsYesterday = (
-        (past.getDay() - 1) === today.getDay() &&
+        (past.getDay() + 1) === today.getDay() &&
         days < 2)
 
       if (hours < 1) {
