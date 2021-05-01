@@ -184,16 +184,38 @@ export default {
       }
     },
     getDaysAgoStr (dateStr) {
+      // Get dates
       let today = new Date()
       let past = new Date(dateStr)
+
+      // Calculate times
       let days = (today - past) / (1000 * 3600 * 24)
       let hours = (today - past) / (1000 * 3600)
+      let minutes = (today - past) / ((1000 * 3600)/60)
+      const datesAreOnSameDay = (
+        past.getFullYear() === today.getFullYear() &&
+        past.getMonth() === today.getMonth() &&
+        past.getDate() === today.getDate())
+      const dateIsYesterday = (
+        (past.getDay() - 1) === today.getDay() &&
+        days < 2)
+
       if (hours < 1) {
-        return 'in the last hour'
-      } else if (hours < 13) {
+        return `${Math.floor(minutes)} minutes ago`
+      } else if (hours < 4) {
         return `${Math.floor(hours)} hours ago`
-      } else if (days < 1) {
-        return 'in the last 24 hours'
+      } else if (datesAreOnSameDay) {
+        // updated today
+        if (past.getHours() < 12) {
+          // Updated this morning
+          return 'this morning'
+        } else if (past.getHours() < 14) {
+          return 'midday today'
+        } else {
+          return 'this afternoon'
+        }
+      } else if (dateIsYesterday) {
+        return 'yesterday'
       } else if (days < 7) {
         return parseInt(days) + ' days ago'
       } else if (days < 30) {
