@@ -41,13 +41,10 @@
               </td>
               <td>
                 <p class="mb-0">{{ store.storeName }}</p>
-                <p class="mb-0 d-inline text-danger" v-if="wasUpdatedOverAWeekAgo(store.dateChecked)">
-                  Updated {{ getDaysAgoStr(store.dateChecked) }}
+                <p class="mb-0 d-inline text-muted">
+                  <span :class="[wasUpdatedOverAWeekAgo(store.dateChecked) ? 'text-danger' : 'text-muted']">
+                  Updated {{ getDaysAgoStr(store.dateChecked) }}</span><span v-if="store.distance !== 0 || 1">, {{ store.distance.toFixed(1) }}km</span>
                 </p>
-                <p class="text-muted mb-0 d-inline" v-else>
-                  Updated {{ getDaysAgoStr(store.dateChecked) }}
-                </p>
-                <p class="text-muted mb-0 d-inline" v-if="store.distance !== 0">, {{ store.distance.toFixed(1) }}km</p>
               </td>
               <td v-if="store.salePrice !== null">
                 <s>${{ roundPrice(store.price) }}</s><br/>
