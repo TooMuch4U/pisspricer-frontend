@@ -41,8 +41,11 @@
               </td>
               <td>
                 <p class="mb-0">{{ store.storeName }}</p>
-                <p class="text-muted mb-0" v-if="store.distance === 0">Updated {{ getDaysAgoStr(store.dateChecked) }}</p>
-                <p class="text-muted mb-0" v-else>Updated {{ getDaysAgoStr(store.dateChecked) }}, {{ store.distance.toFixed(1) }}km</p>
+                <p class="text-muted mb-0 d-inline text-danger" v-if="wasUpdatedOverAWeekAgo(store.dateChecked)">
+                  Updated {{ getDaysAgoStr(store.dateChecked) }}
+                <p class="text-muted mb-0 d-inline" v-else>
+                  Updated {{ getDaysAgoStr(store.dateChecked) }}
+                <p class="text-muted mb-0 d-inline" v-if="store.distance !== 0">, {{ store.distance.toFixed(1) }}km</p>
               </td>
               <td v-if="store.salePrice !== null">
                 <s>${{ roundPrice(store.price) }}</s><br/>
@@ -182,6 +185,16 @@ export default {
             this.order = 'price-asc'
           })
       }
+    },
+    wasUpdatedOverAWeekAgo (dateStr) {
+      // Get dates
+      let today = new Date()
+      let past = new Date(dateStr)
+
+      // Calculate times
+      let days = (today - past) / (1000 * 3600 * 24)
+
+      return days > 7
     },
     getDaysAgoStr (dateStr) {
       // Get dates
