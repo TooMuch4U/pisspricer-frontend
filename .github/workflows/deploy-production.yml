@@ -22,7 +22,7 @@ jobs:
         with:
           src: ./dist/*
           host: ${{ secrets.SSH_HOST }}
-          remote: /var/www/main
+          remote: /var/
           port: ${{ secrets.SSH_PORT }}
           user: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
