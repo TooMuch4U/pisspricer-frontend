@@ -3,7 +3,7 @@
     <div class="row foot-div">
       <div class="col-12">
         <p class="text-center mx-auto mt-3">&copy; Tom Rizzi 2021</p>
-        <p class="text-center mx-auto">tom@pisspricer.co.nz</p>
+        <p class="text-center mx-auto">t.rizzi@icloud.com</p>
       </div>
     </div>
   </div>
