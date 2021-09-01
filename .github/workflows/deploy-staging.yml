@@ -22,7 +22,7 @@ jobs:
         with:
           src: ./dist/*
           host: ${{ secrets.SSH_HOST }}
-          remote: dev.pisspricer.co.nz
+          remote: /var/www/dev
           port: ${{ secrets.SSH_PORT }}
           user: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
