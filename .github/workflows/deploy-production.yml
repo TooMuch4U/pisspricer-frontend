@@ -1,4 +1,4 @@
-name: DEPLOY TO PRODUCTION
+name: Production Deploy
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
         with:
           src: ./dist/*
           host: ${{ secrets.SSH_HOST }}
-          remote: public_html
+          remote: /var/www/main
           port: ${{ secrets.SSH_PORT }}
           user: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
