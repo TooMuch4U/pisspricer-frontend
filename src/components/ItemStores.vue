@@ -203,7 +203,7 @@ export default {
       // Calculate times
       let days = (today - past) / (1000 * 3600 * 24)
       let hours = (today - past) / (1000 * 3600)
-      let minutes = (today - past) / ((1000 * 3600)/60)
+      let minutes = (today - past) / ((1000 * 3600) / 60)
       const datesAreOnSameDay = (
         past.getFullYear() === today.getFullYear() &&
         past.getMonth() === today.getMonth() &&

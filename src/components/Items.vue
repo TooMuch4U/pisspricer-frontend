@@ -8,7 +8,16 @@
         </div>
         <div class="col-0 d-none d-md-block filter-div"></div>
 
-        <div class="col-7" v-if="isLoading">Loading...</div>
+        <div class="col-7" v-if="isNetworkError">
+          <div class="alert alert-danger">Pisspricer services are currency down :( <br>Please try again later.</div>
+        </div>
+
+        <div class="col-7" v-else-if="error">
+          <div class="alert alert-danger">An unexpected error occurred :( <br>Please try again later.</div>
+        </div>
+
+        <div class="col-7" v-else-if="isLoading">Loading...</div>
+
         <div class="col-12 col-md-7" v-else>
           <div class="container-fluid">
             <div class="row">
@@ -102,7 +111,8 @@ export default {
       combineItems: {
         a: null,
         b: null
-      }
+      },
+      error: null
     }
   },
   components: {
@@ -168,6 +178,9 @@ export default {
     },
     combineUrl () {
       return {path: '/admin/combine', query: this.combineItems}
+    },
+    isNetworkError () {
+      return `${this.error}` === 'Error: Network Error'
     }
   },
   methods: {
@@ -183,6 +196,7 @@ export default {
           this.isLoading = 0
         })
         .catch((res) => {
+          this.error = res
           console.log('Error ' + res)
         })
     },
